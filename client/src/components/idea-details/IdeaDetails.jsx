@@ -132,8 +132,26 @@ export default function IdeaDetails() {
                             </p>
                         </div>
                     )}
+
+                    <div className="flex flex-col gap-3 border-t border-slate-200 p-6 sm:flex-row sm:p-8">
+                        <Link
+                            to={`/ideas/${ideaId}/edit`}
+                            className="rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        >
+                            Редактирай
+                        </Link>
+                        <button
+                            type="button"
+                            className="rounded-lg border border-red-600 px-5 py-2.5 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                        >
+                            Изтрий
+                        </button>
+                    </div>
                 </article>
+
+
             )}
         </div>
+
     )
 }
