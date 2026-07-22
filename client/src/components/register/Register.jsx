@@ -1,4 +1,4 @@
-function Register() {
+export default function Register() {
 
     return (
         <section className="space-y-3">
@@ -9,5 +9,3 @@ function Register() {
         </section>
     )
 }
-
-export default Register

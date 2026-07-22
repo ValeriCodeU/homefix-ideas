@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-function IdeaCard({
+export default function IdeaCard({
     _id,
     title,
     category,
@@ -78,5 +78,3 @@ function IdeaCard({
         </article>
     )
 }
-
-export default IdeaCard

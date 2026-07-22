@@ -1,4 +1,4 @@
-function NotFound() {
+export default function NotFound() {
 
     return (
         <section className="space-y-3">
@@ -10,5 +10,3 @@ function NotFound() {
         </section>
     )
 }
-
-export default NotFound

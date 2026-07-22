@@ -1,4 +1,4 @@
-function MyIdeas() {
+export default function MyIdeas() {
 
     return (
         <section className="space-y-3">
@@ -9,5 +9,3 @@ function MyIdeas() {
         </section>
     )
 }
-
-export default MyIdeas

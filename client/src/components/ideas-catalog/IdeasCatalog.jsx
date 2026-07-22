@@ -1,4 +1,4 @@
-function IdeasCatalog() {
+export default function IdeasCatalog() {
 
     return (
         <section className="space-y-3">
@@ -10,5 +10,3 @@ function IdeasCatalog() {
         </section>
     )
 }
-
-export default IdeasCatalog

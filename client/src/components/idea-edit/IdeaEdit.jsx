@@ -1,4 +1,4 @@
-function IdeaEdit() {
+export default function IdeaEdit() {
 
     return (
         <section className="space-y-3">
@@ -10,5 +10,3 @@ function IdeaEdit() {
         </section>
     )
 }
-
-export default IdeaEdit

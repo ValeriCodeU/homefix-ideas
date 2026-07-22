@@ -1,4 +1,4 @@
-function Login() {
+export default function Login() {
 
     return (
         <section className="space-y-3">
@@ -9,5 +9,3 @@ function Login() {
         </section>
     )
 }
-
-export default Login

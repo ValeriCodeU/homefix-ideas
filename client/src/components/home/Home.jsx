@@ -13,7 +13,7 @@ const categories = [
     'Декорация',
 ]
 
-function Home() {
+export default function Home() {
     const [latestIdeas, setLatestIdeas] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState('')
@@ -115,5 +115,3 @@ function Home() {
         </div>
     )
 }
-
-export default Home

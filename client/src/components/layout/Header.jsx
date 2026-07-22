@@ -18,7 +18,7 @@ const linkClass = ({ isActive }) =>
             : 'text-slate-700 hover:bg-slate-200 hover:text-slate-900',
     ].join(' ')
 
-function Header() {
+export default function Header() {
 
     return (
         <header className="border-b border-slate-200 bg-white">
@@ -42,5 +42,3 @@ function Header() {
         </header>
     )
 }
-
-export default Header

@@ -2,7 +2,7 @@ import { Outlet } from 'react-router'
 import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 
-function Layout() {
+export default function Layout() {
 
     return (
         <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
@@ -16,5 +16,3 @@ function Layout() {
         </div>
     )
 }
-
-export default Layout

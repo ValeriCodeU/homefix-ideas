@@ -11,7 +11,7 @@ import Login from './components/login/Login.jsx'
 import Register from './components/register/Register.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
 
-function App() {
+export default function App() {
 
     return (
         <Routes>
@@ -29,5 +29,3 @@ function App() {
         </Routes>
     )
 }
-
-export default App
