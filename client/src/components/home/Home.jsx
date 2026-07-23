@@ -26,7 +26,7 @@ export default function Home() {
             //     const sortedIdeas = ideasArray.sort((a, b) => b._createdOn - a._createdOn);
             //     const latestThreeIdeas = sortedIdeas.slice(0, 3);
             //     setLatestIdeas(latestThreeIdeas);
-            // }               
+            // })               
                 const sorted = [...ideas].sort((a, b) => b._createdOn - a._createdOn)
                 setLatestIdeas(sorted.slice(0, 3))
             })
