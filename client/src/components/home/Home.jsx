@@ -21,6 +21,12 @@ export default function Home() {
     useEffect(() => {
         ideaService.getAll()
             .then((ideas) => {
+            //ако се ползва за тест - услугата на SoftUni Practise Server - jsonstore, която връщаше обект
+            //     const ideasArray = Object.values(ideas);
+            //     const sortedIdeas = ideasArray.sort((a, b) => b._createdOn - a._createdOn);
+            //     const latestThreeIdeas = sortedIdeas.slice(0, 3);
+            //     setLatestIdeas(latestThreeIdeas);
+            // }               
                 const sorted = [...ideas].sort((a, b) => b._createdOn - a._createdOn)
                 setLatestIdeas(sorted.slice(0, 3))
             })

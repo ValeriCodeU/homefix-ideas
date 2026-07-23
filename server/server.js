@@ -1414,7 +1414,7 @@
                 "estimatedCost": 10,
                 "materials": "",
                 "description": "Малка практична поставка за ключове, която се монтира до входа.",
-                "imageUrl": "",
+                "imageUrl": "https://img.bg.favicdn.net/images/products/300x300/db7b40c0-9257-4b4d-8df2-7bd2886fcdf8.jpg",
                 "_createdOn": 1784721600000
             },
         },
