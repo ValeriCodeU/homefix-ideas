@@ -21,7 +21,7 @@ const linkClass = ({ isActive }) =>
 
 export default function Header() {
 
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, logoutHandler } = useContext(AuthContext);
 
     const visibleLinks = navLinks.filter((link) => {
         if (link.guestOnly) return !isAuthenticated;
@@ -45,6 +45,17 @@ export default function Header() {
                                 </NavLink>
                             </li>
                         ))}
+                        {isAuthenticated && (
+                            <li>
+                                <button
+                                    type="button"
+                                    onClick={logoutHandler}
+                                    className="rounded px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                >
+                                    Изход
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </nav>
             </div>
