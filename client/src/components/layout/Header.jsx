@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router'
-
+import { useContext } from 'react'
+import AuthContext from '../../contexts/AuthContext.jsx'
 const navLinks = [
     { to: '/', label: 'Начало', end: true },
     { to: '/ideas', label: 'Идеи', end: true },
-    { to: '/ideas/create', label: 'Добави идея' },
-    { to: '/my-ideas', label: 'Моите идеи' },
-    { to: '/login', label: 'Вход' },
-    { to: '/register', label: 'Регистрация' },
+    { to: '/ideas/create', label: 'Добави идея', privateOnly: true },
+    { to: '/my-ideas', label: 'Моите идеи', privateOnly: true },
+    { to: '/login', label: 'Вход', guestOnly: true },
+    { to: '/register', label: 'Регистрация', guestOnly: true },
 ]
 
 const linkClass = ({ isActive }) =>
@@ -20,6 +21,14 @@ const linkClass = ({ isActive }) =>
 
 export default function Header() {
 
+    const { isAuthenticated } = useContext(AuthContext);
+
+    const visibleLinks = navLinks.filter((link) => {
+        if (link.guestOnly) return !isAuthenticated;
+        if (link.privateOnly) return isAuthenticated;
+        return true;
+    });
+
     return (
         <header className="border-b border-slate-200 bg-white">
             <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -29,7 +38,7 @@ export default function Header() {
 
                 <nav aria-label="Основна навигация">
                     <ul className="flex flex-wrap gap-1">
-                        {navLinks.map(({ to, label, end }) => (
+                        {visibleLinks.map(({ to, label, end }) => (
                             <li key={to}>
                                 <NavLink to={to} end={end} className={linkClass}>
                                     {label}
