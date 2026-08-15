@@ -8,5 +8,5 @@ export const register = (email, password) =>
 export const login = (email, password) =>
     request(`${baseUrl}/login`, 'POST', { email, password });
 
-export const logout = () =>
-    request(`${baseUrl}/logout`, 'GET');
+export const logout = (accessToken) =>
+    request(`${baseUrl}/logout`, 'GET', undefined, accessToken);

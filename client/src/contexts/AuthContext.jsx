@@ -47,7 +47,7 @@ export function AuthProvider({
 
     const logoutHandler = async () => {
         try {
-            await authService.logout();
+            await authService.logout(user.accessToken);
         } catch (err) {
             console.error('Logout error:', err);
         }
