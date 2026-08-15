@@ -1,9 +1,27 @@
 import { Link } from 'react-router'
+import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+
+const initialValues = {
+    email: '',
+    password: '',
+}
+import AuthContext from '../../contexts/AuthContext.jsx'
 
 const labelClass = 'mb-1 block text-sm font-medium text-slate-700'
 const fieldClass = 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 transition-colors hover:border-slate-400 focus:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 
 export default function Login() {
+
+    const { loginHandler } = useContext(AuthContext);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
+        defaultValues: initialValues
+    });
 
     return (
         <div className="mx-auto max-w-md space-y-6">
@@ -14,12 +32,12 @@ export default function Login() {
                 </p>
             </div>
 
-            <form className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <form className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8" onSubmit={handleSubmit(loginHandler)}>
                 <div>
                     <label htmlFor="email" className={labelClass}>Имейл</label>
                     <input
                         id="email"
-                        name="email"
+                        {...register('email')}
                         type="email"
                         placeholder="you@example.com"
                         className={fieldClass}
@@ -30,7 +48,7 @@ export default function Login() {
                     <label htmlFor="password" className={labelClass}>Парола</label>
                     <input
                         id="password"
-                        name="password"
+                        {...register('password')}
                         type="password"
                         placeholder="••••••••"
                         className={fieldClass}

@@ -1,7 +1,5 @@
 import { Routes, Route } from 'react-router'
-import { useState } from 'react';
-import * as authService from './services/authService.js';
-import AuthContext from './contexts/AuthContext.jsx';
+import { AuthProvider } from './contexts/AuthContext.jsx';
 
 import Layout from './components/layout/Layout.jsx'
 import Home from './components/home/Home.jsx'
@@ -16,28 +14,9 @@ import NotFound from './components/not-found/NotFound.jsx'
 
 export default function App() {
 
-    const [user, setUser] = useState(null);
-
-    const registerHandler = async (data) => {       
-
-        const result = await authService.register(data.email, data.password);
-
-        setUser(result);
-
-        console.log('Registration result:', result);
-    }
-
-    
-
-    const userContextValues = {
-        user,
-        isAuthenticated: !!user?.accessToken,
-        setUser,
-        registerHandler,
-    }
 
     return (
-        <AuthContext.Provider value={userContextValues}>
+        <AuthProvider>
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<Home />} />
@@ -51,6 +30,6 @@ export default function App() {
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
-        </AuthContext.Provider>
+        </AuthProvider>
     )
 }
