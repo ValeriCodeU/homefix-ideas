@@ -11,6 +11,7 @@ import MyIdeas from './components/my-ideas/MyIdeas.jsx'
 import Login from './components/login/Login.jsx'
 import Register from './components/register/Register.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
+import PrivateRoute from './components/guards/PrivateRoute.jsx'
 
 export default function App() {
 
@@ -21,12 +22,16 @@ export default function App() {
                 <Route element={<Layout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/ideas" element={<IdeasCatalog />} />
-                    <Route path="/ideas/create" element={<IdeaCreate />} />
                     <Route path="/ideas/:ideaId" element={<IdeaDetails />} />
-                    <Route path="/ideas/:ideaId/edit" element={<IdeaEdit />} />
-                    <Route path="/my-ideas" element={<MyIdeas />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+
+                    <Route element={<PrivateRoute />}>
+                        <Route path="/ideas/create" element={<IdeaCreate />} />
+                        <Route path="/ideas/:ideaId/edit" element={<IdeaEdit />} />
+                        <Route path="/my-ideas" element={<MyIdeas />} />
+                    </Route>
+
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
