@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router'
+import { useContext } from 'react'
+import AuthContext from '../../contexts/AuthContext.jsx'
 import Swal from 'sweetalert2'
 
 import * as ideaService from '../../services/ideaService.js'
@@ -6,10 +8,11 @@ import IdeaForm from '../idea-form/IdeaForm.jsx'
 
 export default function IdeaCreate() {
     const navigate = useNavigate()
+    const { user } = useContext(AuthContext);
 
     const createIdeaSubmitHandler = async (data) => {
         try {
-            const result = await ideaService.create(data)
+            const result = await ideaService.create(data, user?.accessToken);
 
             await Swal.fire({
                 title: '✅ Готово!',

@@ -1,19 +1,19 @@
 export default async function request(url, method, data, accessToken) {
 
-      const options = {
+    const options = {
         headers: {}
-      };
+    };
 
-      if (method) {
+    if (method) {
         options.method = method;
-      }
+    }
 
-       if(data !== undefined) {
+    if (data !== undefined) {
         options.body = JSON.stringify(data);
         options.headers['content-type'] = 'application/json';
     }
 
-    if(accessToken) {        
+    if (accessToken) {
         options.headers['X-Authorization'] = accessToken;
     }
 

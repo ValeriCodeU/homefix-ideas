@@ -8,8 +8,8 @@ export const getAll = () =>
 export const getById = (ideaId) =>
     request(`${baseUrl}/${ideaId}`);
 
-export const create = (ideaData) =>
-    request(baseUrl, 'POST', ideaData);
+export const create = (ideaData, token) =>
+    request(baseUrl, 'POST', ideaData, token);
 
 export const update = (ideaId, ideaData) =>
     request(`${baseUrl}/${ideaId}`, 'PUT', ideaData);
