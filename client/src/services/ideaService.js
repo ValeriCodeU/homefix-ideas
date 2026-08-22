@@ -2,8 +2,12 @@ import request from './request';
 
 const baseUrl = 'http://localhost:3030/data/ideas';
 
-export const getAll = () =>
-    request(baseUrl);
+export const getAll = (query) =>{
+    if (query) {
+        return request(`${baseUrl}?${query}`);
+    }
+    return request(baseUrl);
+}
 
 export const getById = (ideaId) =>
     request(`${baseUrl}/${ideaId}`);
