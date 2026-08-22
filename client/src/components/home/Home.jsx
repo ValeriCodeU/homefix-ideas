@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 
 import * as ideaService from '../../services/ideaService.js'
 import IdeaCard from '../idea-card/IdeaCard.jsx'
+import SkeletonCard from '../skeleton-card/SkeletonCard.jsx'
 
 const categories = [
     'Организация',
@@ -78,7 +79,14 @@ export default function Home() {
                 </div>
 
                 {isLoading && (
-                    <p className="text-slate-600">Зареждане на идеите…</p>
+                    <div className="space-y-4">
+                        <p className="text-slate-600">Зареждане на идеите…</p>
+                        <div className="grid animate-pulse gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            {Array.from({ length: 3 }).map((item, index) => (
+                                <SkeletonCard key={index} />
+                            ))}
+                        </div>
+                    </div>
                 )}
 
                 {!isLoading && error && (
