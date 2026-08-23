@@ -15,8 +15,8 @@ export const getById = (ideaId) =>
 export const create = (ideaData, accessToken) =>
     request(baseUrl, 'POST', ideaData, accessToken);
 
-export const update = (ideaId, ideaData) =>
-    request(`${baseUrl}/${ideaId}`, 'PUT', ideaData);
+export const update = (ideaId, ideaData, accessToken) =>
+    request(`${baseUrl}/${ideaId}`, 'PUT', ideaData, accessToken);
 
 export const remove = (ideaId, accessToken) =>
     request(`${baseUrl}/${ideaId}`, 'DELETE', undefined, accessToken);

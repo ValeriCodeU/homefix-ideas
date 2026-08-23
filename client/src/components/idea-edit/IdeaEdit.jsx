@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import Swal from 'sweetalert2'
 
 import * as ideaService from '../../services/ideaService.js'
 import IdeaForm from '../idea-form/IdeaForm.jsx'
+import AuthContext from '../../contexts/AuthContext.jsx'
 
 export default function IdeaEdit() {
     const { ideaId } = useParams()
     const navigate = useNavigate()
+
+    const { user } = useContext(AuthContext);
+    const accessToken = user?.accessToken;
 
     const [idea, setIdea] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -44,10 +48,10 @@ export default function IdeaEdit() {
 
     const editIdeaSubmitHandler = async (data) => {
         try {
-            await ideaService.update(ideaId, data)
+            await ideaService.update(ideaId, data, accessToken);
 
             await Swal.fire({
-                title: '✅ Готово!',
+                title: '✅ Успех!',
                 text: 'Промените бяха запазени успешно!',
             })
 
