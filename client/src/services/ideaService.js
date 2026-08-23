@@ -12,11 +12,11 @@ export const getAll = (query) =>{
 export const getById = (ideaId) =>
     request(`${baseUrl}/${ideaId}`);
 
-export const create = (ideaData, token) =>
-    request(baseUrl, 'POST', ideaData, token);
+export const create = (ideaData, accessToken) =>
+    request(baseUrl, 'POST', ideaData, accessToken);
 
 export const update = (ideaId, ideaData) =>
     request(`${baseUrl}/${ideaId}`, 'PUT', ideaData);
 
-export const remove = (ideaId) =>
-    request(`${baseUrl}/${ideaId}`, 'DELETE');
+export const remove = (ideaId, accessToken) =>
+    request(`${baseUrl}/${ideaId}`, 'DELETE', undefined, accessToken);

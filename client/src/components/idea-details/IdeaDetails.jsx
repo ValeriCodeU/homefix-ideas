@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router'
+import { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router'
+import Swal from 'sweetalert2'
 
 import * as ideaService from '../../services/ideaService.js'
+import AuthContext from '../../contexts/AuthContext.jsx'
 
 const hasValue = (value) =>
     value !== undefined && value !== null && value !== ''
@@ -9,9 +11,14 @@ const hasValue = (value) =>
 export default function IdeaDetails() {
     const { ideaId } = useParams()
 
+    const { user } = useContext(AuthContext);
+    const accessToken = user?.accessToken;
+
     const [idea, setIdea] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState('')
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         let ignore = false
@@ -41,6 +48,38 @@ export default function IdeaDetails() {
             ignore = true
         }
     }, [ideaId])
+
+    const deleteIdeaHandler = async () => {
+        const confirmed = await Swal.fire({
+            title: 'Сигурни ли сте?',
+            text: `Тази идея ще бъде изтрита завинаги: ${idea.title}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Да, изтрий',
+            cancelButtonText: 'Отказ'
+        });
+
+        if (confirmed.isConfirmed) {
+            try {
+
+                await ideaService.remove(ideaId, accessToken);
+                Swal.fire({
+                    title: "✅ Успех!",
+                    text: `${idea.title} беше успешно изтрита.}`,
+                });
+                navigate('/ideas');
+
+            } catch (error) {
+
+                Swal.fire(`Грешка', 'Неуспешно изтриване на идеята.', ${error.message}`);
+                Swal.fire({
+                    title: "❌ Грешка! 'Неуспешно изтриване на идеята.",
+                    text: error.message,
+
+                });
+            }
+        }
+    }
 
     return (
         <div className="space-y-6">
@@ -142,6 +181,7 @@ export default function IdeaDetails() {
                         </Link>
                         <button
                             type="button"
+                            onClick={deleteIdeaHandler}
                             className="rounded-lg border border-red-600 px-5 py-2.5 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                         >
                             Изтрий
