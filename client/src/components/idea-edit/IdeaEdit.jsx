@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { Navigate, useNavigate, useParams } from 'react-router'
 import Swal from 'sweetalert2'
 
 import * as ideaService from '../../services/ideaService.js'
@@ -74,6 +74,12 @@ export default function IdeaEdit() {
                 {error}
             </p>
         )
+    }
+
+    const isOwner = user && idea && user._id === idea._ownerId;
+
+    if (!isOwner) {
+        return <Navigate to={`/ideas/${ideaId}`} replace />
     }
 
     return (
