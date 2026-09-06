@@ -1,6 +1,7 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
 import { useNavigate } from 'react-router';
 import * as authService from '../services/authService.js';
+import useLocalStorage from '../hooks/useLocalStorage.js';
 
 const AuthContext = createContext({
     isAuthenticated: false,
@@ -21,7 +22,8 @@ export function AuthProvider({
     children
 }) {
 
-    const [user, setUser] = useState(null);
+    // const [user, setUser] = useState(null);
+    const [user, setUser] = useLocalStorage('user', null);
     const navigate = useNavigate();
 
     const registerHandler = async (data) => {
@@ -52,6 +54,7 @@ export function AuthProvider({
             console.error('Logout error:', err);
         }
         setUser(null);
+        localStorage.removeItem('user');
         navigate('/');
     }
 
