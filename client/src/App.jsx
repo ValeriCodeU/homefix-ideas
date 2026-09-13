@@ -12,6 +12,7 @@ import Login from './components/login/Login.jsx'
 import Register from './components/register/Register.jsx'
 import NotFound from './components/not-found/NotFound.jsx'
 import PrivateRoute from './components/guards/PrivateRoute.jsx'
+import GuestRoute from './components/guards/GuestRoute.jsx'
 
 export default function App() {
 
@@ -23,8 +24,11 @@ export default function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/ideas" element={<IdeasCatalog />} />
                     <Route path="/ideas/:ideaId" element={<IdeaDetails />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+
+                    <Route element={<GuestRoute />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                    </Route>
 
                     <Route element={<PrivateRoute />}>
                         <Route path="/ideas/create" element={<IdeaCreate />} />
