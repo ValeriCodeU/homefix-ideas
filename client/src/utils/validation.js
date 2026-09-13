@@ -29,3 +29,61 @@ export const confirmPasswordRules = {
         return 'Паролите не съвпадат.';
     },
 };
+
+const URL_PATTERN = /^https?:\/\/.+/;
+
+export const ideaRules = {
+    title: {
+        required: 'Заглавието е задължително.',
+        minLength: {
+            value: 5,
+            message: 'Заглавието трябва да е поне 5 символа.',
+        },
+        maxLength: {
+            value: 100,
+            message: 'Заглавието може да е най-много 100 символа.',
+        },
+    },
+    category: {
+        required: 'Изберете категория.',
+    },
+    difficulty: {
+        required: 'Изберете трудност.',
+    },
+    estimatedCost: {
+        required: 'Въведете ориентировъчна цена.',
+        min: {
+            value: 0,
+            message: 'Цената не може да е отрицателна.',
+        },
+        valueAsNumber: true,
+    },
+    imageUrl: {
+        pattern: {
+            value: URL_PATTERN,
+            message: 'Връзката трябва да започва с http:// или https://.',
+        },
+    },
+    materials: {
+        required: 'Избройте необходимите материали.',
+        minLength: {
+            value: 3,
+            message: 'Материалите трябва да са поне 3 символа.',
+        },
+        maxLength: {
+            value: 500,
+            message: 'Материалите може да са най-много 500 символа.',
+        },
+    },
+    description: {
+        // required: 'Описанието е задължително.',
+        minLength: {
+            value: 3,
+            message: 'Описанието трябва да е поне 3 символа.',
+        },
+        maxLength: {
+            value: 1000,
+            message: 'Описанието може да е най-много 1000 символа.',
+        },
+    },
+};
