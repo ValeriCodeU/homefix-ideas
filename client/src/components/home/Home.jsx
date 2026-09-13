@@ -4,26 +4,18 @@ import { Link } from 'react-router'
 import * as ideaService from '../../services/ideaService.js'
 import IdeaCard from '../idea-card/IdeaCard.jsx'
 import SkeletonCard from '../skeleton-card/SkeletonCard.jsx'
+import { categoryOptions } from '../../utils/ideaOptions.js'
 
-const categories = [
-    'Организация',
-    'Мебели',
-    'Съхранение',
-    'Обновяване',
-    'Двор и балкон',
-    'Декорация',
-]
+const params = new URLSearchParams();
+params.append('sortBy', '_createdOn desc');
+params.append('pageSize', '3');
+
+const query = params.toString().replace(/\+/g, '%20');
 
 export default function Home() {
     const [latestIdeas, setLatestIdeas] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState('')
-
-    const params = new URLSearchParams();
-    params.append('sortBy', '_createdOn desc');
-    params.append('pageSize', '3');
-
-    const query = params.toString().replace(/\+/g, '%20');
 
     useEffect(() => {
         ideaService.getAll(query)
@@ -122,15 +114,15 @@ export default function Home() {
             <section className="space-y-6">
                 <h2 className="text-2xl font-bold text-slate-900">Намери вдъхновение за дома</h2>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                    {categories.map((name) => (
+                    {categoryOptions.map((category) => (
                         <div
-                            key={name}
+                            key={category.value}
                             className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4"
                         >
                             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-base font-semibold text-blue-700">
-                                {name.charAt(0)}
+                                {category.label.charAt(0)}
                             </span>
-                            <span className="font-medium text-slate-800">{name}</span>
+                            <span className="font-medium text-slate-800">{category.label}</span>
                         </div>
                     ))}
                 </div>

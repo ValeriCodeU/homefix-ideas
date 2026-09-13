@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 
 import * as ideaService from '../../services/ideaService.js'
 import AuthContext from '../../contexts/AuthContext.jsx'
+import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js'
 
 const hasValue = (value) =>
     value !== undefined && value !== null && value !== ''
@@ -63,21 +64,20 @@ export default function IdeaDetails() {
 
         if (confirmed.isConfirmed) {
             try {
-
                 await ideaService.remove(ideaId, accessToken);
+
                 Swal.fire({
-                    title: "✅ Успех!",
-                    text: `${idea.title} беше успешно изтрита.}`,
+                    title: '✅ Успех!',
+                    text: `„${idea.title}“ беше изтрита успешно.`,
                 });
+
                 navigate('/ideas');
+            } catch (err) {
+                console.error('Delete idea error:', err);
 
-            } catch (error) {
-
-                Swal.fire(`Грешка', 'Неуспешно изтриване на идеята.', ${error.message}`);
                 Swal.fire({
-                    title: "❌ Грешка! 'Неуспешно изтриване на идеята.",
-                    text: error.message,
-
+                    title: '❌ Грешка!',
+                    text: 'Идеята не може да бъде изтрита. Опитайте отново.',
                 });
             }
         }
@@ -128,12 +128,12 @@ export default function IdeaDetails() {
                                 <div className="flex flex-wrap gap-2">
                                     {hasValue(idea.category) && (
                                         <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
-                                            {idea.category}
+                                            {getOptionLabel(categoryOptions, idea.category)}
                                         </span>
                                     )}
                                     {hasValue(idea.difficulty) && (
                                         <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
-                                            {idea.difficulty}
+                                            {getOptionLabel(difficultyOptions, idea.difficulty)}
                                         </span>
                                     )}
                                 </div>

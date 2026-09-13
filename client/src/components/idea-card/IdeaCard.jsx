@@ -1,5 +1,7 @@
 import { Link } from 'react-router'
 
+import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js'
+
 export default function IdeaCard({
     _id,
     title,
@@ -34,12 +36,12 @@ export default function IdeaCard({
                 <div className="flex flex-wrap gap-2">
                     {category && (
                         <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
-                            {category}
+                            {getOptionLabel(categoryOptions, category)}
                         </span>
                     )}
                     {difficulty && (
                         <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
-                            {difficulty}
+                            {getOptionLabel(difficultyOptions, difficulty)}
                         </span>
                     )}
                 </div>
