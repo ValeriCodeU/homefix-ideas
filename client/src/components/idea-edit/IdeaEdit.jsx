@@ -56,10 +56,12 @@ export default function IdeaEdit() {
             })
 
             navigate(`/ideas/${ideaId}`)
-        } catch (error) {
+        } catch (err) {
+            console.error('Edit idea error:', err)
+
             await Swal.fire({
                 title: '❌ Грешка!',
-                text: error.message || 'Промените не могат да бъдат запазени. Опитайте отново.',
+                text: 'Промените не могат да бъдат запазени. Опитайте отново.',
             })
         }
     }

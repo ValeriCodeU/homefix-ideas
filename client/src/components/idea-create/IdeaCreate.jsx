@@ -20,10 +20,12 @@ export default function IdeaCreate() {
             })
 
             navigate(`/ideas/${result._id}`)
-        } catch (error) {
+        } catch (err) {
+            console.error('Create idea error:', err)
+
             await Swal.fire({
                 title: '❌ Грешка!',
-                text: error.message || 'Идеята не може да бъде създадена. Опитайте отново.',
+                text: 'Идеята не може да бъде създадена. Опитайте отново.',
             })
         }
     }
