@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router'
 import { useContext } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
-import { getDisplayName } from '../../utils/userDisplay.js'
+import UserMenu from './UserMenu.jsx'
 const navLinks = [
     { to: '/', label: 'Начало', end: true },
     { to: '/ideas', label: 'Идеи', end: true },
@@ -30,16 +30,14 @@ export default function Header() {
         return true;
     });
 
-    const displayName = getDisplayName(user?.email); //помощна променлива за показване на името на потребителя
-
     return (
         <header className="border-b border-slate-200 bg-white">
-            <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
+            <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4">
                 <NavLink to="/" className="text-xl font-bold text-blue-600">
                     HomeFix Ideas
                 </NavLink>
 
-                <nav aria-label="Основна навигация">
+                <nav aria-label="Основна навигация" className="order-last w-full md:order-none md:w-auto">
                     <ul className="flex flex-wrap items-center gap-1">
                         {visibleLinks.map(({ to, label, end }) => (
                             <li key={to}>
@@ -48,33 +46,12 @@ export default function Header() {
                                 </NavLink>
                             </li>
                         ))}
-                        {isAuthenticated && (
-                            <>
-                                <li className="flex items-center gap-2 px-2 text-sm text-slate-600" title={user.email}>
-                                    <span
-                                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700"
-                                        aria-hidden="true"
-                                    >
-                                        {displayName.charAt(0).toUpperCase()}
-                                    </span>
-                                    <span className="hidden lg:inline">Добре дошли,</span>
-                                    <span className="max-w-24 truncate font-semibold text-slate-900 lg:max-w-48">
-                                        {displayName}
-                                    </span>
-                                </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        onClick={logoutHandler}
-                                        className="block rounded px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                                    >
-                                        Изход
-                                    </button>
-                                </li>
-                            </>
-                        )}
                     </ul>
                 </nav>
+
+                {isAuthenticated && (
+                    <UserMenu email={user.email} onLogout={logoutHandler} />
+                )}
             </div>
         </header>
     )
