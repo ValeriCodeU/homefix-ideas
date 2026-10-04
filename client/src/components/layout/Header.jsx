@@ -12,7 +12,7 @@ const navLinks = [
 
 const linkClass = ({ isActive }) =>
     [
-        'rounded px-3 py-2 text-sm font-medium transition-colors',
+        'block rounded px-3 py-2 text-sm font-medium transition-colors',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600',
         isActive
             ? 'bg-blue-600 text-white'
@@ -50,7 +50,7 @@ export default function Header() {
                                 <button
                                     type="button"
                                     onClick={logoutHandler}
-                                    className="rounded px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                    className="block rounded px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                                 >
                                     Изход
                                 </button>
