@@ -87,3 +87,17 @@ export const ideaRules = {
         },
     },
 };
+
+export const commentRules = {
+    required: 'Напишете коментар.',
+    maxLength: {
+        value: 500,
+        message: 'Коментарът може да е най-много 500 символа.',
+    },
+    validate: (value) => {
+        if (value.trim().length > 0) {
+            return true;
+        }
+        return 'Коментарът не може да съдържа само интервали.';
+    },
+};
