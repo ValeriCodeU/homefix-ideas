@@ -7,6 +7,7 @@ import * as commentService from '../../services/commentService.js'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import IdeaCommentCreate from '../idea-comment-create/IdeaCommentCreate.jsx'
 import IdeaCommentList from '../idea-comment-list/IdeaCommentList.jsx'
+import IdeaLikes from '../idea-likes/IdeaLikes.jsx'
 import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js'
 
 const hasValue = (value) =>
@@ -233,6 +234,10 @@ export default function IdeaDetails() {
                                         </div>
                                     )}
                                 </dl>
+
+                                <div className="mt-auto border-t border-slate-200 pt-4">
+                                    <IdeaLikes ideaId={ideaId} ideaOwnerId={idea._ownerId} />
+                                </div>
                             </div>
                         </div>
 
