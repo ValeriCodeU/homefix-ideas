@@ -1,7 +1,7 @@
 import request from './request';
 
-const baseUrl = 'http://localhost:3030/data/ideas';
-
+// const baseUrl = 'http://localhost:3030/data/ideas';
+const baseUrl = 'http://127.0.0.1:5001/homefix-ideas-app/europe-west1/api/data/ideas';
 export const getAll = (query) =>{
     if (query) {
         return request(`${baseUrl}?${query}`);
