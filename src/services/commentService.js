@@ -1,7 +1,8 @@
 import request from './request';
 
 // const baseUrl = 'http://localhost:3030/data/comments';
-const baseUrl = 'http://127.0.0.1:5001/homefix-ideas-app/europe-west1/api/data/comments';
+const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
+const baseUrl = `${SERVER_URL}/data/comments`;
 
 export const getByIdeaId = (ideaId) => {
     const where = encodeURIComponent(`ideaId="${ideaId}"`);

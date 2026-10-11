@@ -27,3 +27,6 @@ dist-ssr
 .agents/
 .claude/
 skills-lock.json
+
+# Firebase cache
+.firebase/
