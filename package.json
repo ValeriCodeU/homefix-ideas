@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "firebase emulators:start --only functions",
+    "server": "firebase emulators:start --only functions --inspect-functions",
     "deploy:server": "firebase deploy --only functions",
     "deploy:client": "npm run build && firebase deploy --only hosting"
   },
