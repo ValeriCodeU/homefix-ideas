@@ -5,10 +5,11 @@ import Swal from 'sweetalert2'
 
 import * as ideaService from '../../services/ideaService.js'
 import IdeaForm from '../idea-form/IdeaForm.jsx'
+import { isInvalidTokenError } from '../../utils/authErrors.js'
 
 export default function IdeaCreate() {
     const navigate = useNavigate()
-    const { user } = useContext(AuthContext);
+    const { user, sessionExpiredHandler } = useContext(AuthContext);
 
     const createIdeaSubmitHandler = async (data) => {
         try {
@@ -21,6 +22,11 @@ export default function IdeaCreate() {
 
             navigate(`/ideas/${result._id}`)
         } catch (err) {
+            if (isInvalidTokenError(err)) {
+                sessionExpiredHandler()
+                return
+            }
+
             console.error('Create idea error:', err)
 
             await Swal.fire({

@@ -9,6 +9,7 @@ import IdeaCommentCreate from '../idea-comment-create/IdeaCommentCreate.jsx'
 import IdeaCommentList from '../idea-comment-list/IdeaCommentList.jsx'
 import IdeaLikes from '../idea-likes/IdeaLikes.jsx'
 import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js'
+import { isInvalidTokenError } from '../../utils/authErrors.js'
 
 const hasValue = (value) =>
     value !== undefined && value !== null && value !== '';
@@ -16,7 +17,7 @@ const hasValue = (value) =>
 export default function IdeaDetails() {
     const { ideaId } = useParams();
 
-    const { user, isAuthenticated } = useContext(AuthContext);
+    const { user, isAuthenticated, sessionExpiredHandler } = useContext(AuthContext);
     const accessToken = user?.accessToken;
 
     const [idea, setIdea] = useState(null);
@@ -110,6 +111,11 @@ export default function IdeaDetails() {
 
             return true;
         } catch (err) {
+            if (isInvalidTokenError(err)) {
+                sessionExpiredHandler();
+                return false;
+            }
+
             console.error('Create comment error:', err);
 
             Swal.fire({
@@ -144,6 +150,11 @@ export default function IdeaDetails() {
 
                 navigate('/ideas');
             } catch (err) {
+                if (isInvalidTokenError(err)) {
+                    sessionExpiredHandler();
+                    return;
+                }
+
                 console.error('Delete idea error:', err);
 
                 Swal.fire({

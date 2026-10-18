@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 
 import * as likeService from '../../services/likeService.js'
 import AuthContext from '../../contexts/AuthContext.jsx'
+import { isInvalidTokenError } from '../../utils/authErrors.js'
 
 const getLikesLabel = (count) => {
     if (count === 1) {
@@ -37,7 +38,7 @@ export default function IdeaLikes({
     ideaOwnerId,
 }) {
 
-    const { user, isAuthenticated } = useContext(AuthContext);
+    const { user, isAuthenticated, sessionExpiredHandler } = useContext(AuthContext);
     const accessToken = user?.accessToken;
 
     const [likes, setLikes] = useState([]);
@@ -83,6 +84,11 @@ export default function IdeaLikes({
             const createdLike = await likeService.create(ideaId, accessToken);
             setLikes((state) => [...state, createdLike]);
         } catch (err) {
+            if (isInvalidTokenError(err)) {
+                sessionExpiredHandler();
+                return;
+            }
+
             console.error('Like idea error:', err);
 
             Swal.fire({
@@ -102,6 +108,11 @@ export default function IdeaLikes({
 
             setLikes((state) => state.filter((like) => like._id !== userLike._id));
         } catch (err) {
+            if (isInvalidTokenError(err)) {
+                sessionExpiredHandler();
+                return;
+            }
+
             console.error('Unlike idea error:', err);
 
             Swal.fire({

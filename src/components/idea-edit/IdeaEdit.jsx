@@ -5,12 +5,13 @@ import Swal from 'sweetalert2'
 import * as ideaService from '../../services/ideaService.js'
 import IdeaForm from '../idea-form/IdeaForm.jsx'
 import AuthContext from '../../contexts/AuthContext.jsx'
+import { isInvalidTokenError } from '../../utils/authErrors.js'
 
 export default function IdeaEdit() {
     const { ideaId } = useParams()
     const navigate = useNavigate()
 
-    const { user } = useContext(AuthContext);
+    const { user, sessionExpiredHandler } = useContext(AuthContext);
     const accessToken = user?.accessToken;
 
     const [idea, setIdea] = useState(null)
@@ -57,6 +58,11 @@ export default function IdeaEdit() {
 
             navigate(`/ideas/${ideaId}`)
         } catch (err) {
+            if (isInvalidTokenError(err)) {
+                sessionExpiredHandler()
+                return
+            }
+
             console.error('Edit idea error:', err)
 
             await Swal.fire({

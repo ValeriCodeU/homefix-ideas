@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 import * as authService from '../services/authService.js';
 import useLocalStorage from '../hooks/useLocalStorage.js';
 
@@ -15,6 +16,7 @@ const AuthContext = createContext({
     registerHandler() { },
     loginHandler() { },
     logoutHandler() { },
+    sessionExpiredHandler() { },
 });
 
 
@@ -58,6 +60,17 @@ export function AuthProvider({
         navigate('/');
     }
 
+    const sessionExpiredHandler = () => {
+        setUser(null);
+        localStorage.removeItem('user');
+        navigate('/login');
+
+        Swal.fire({
+            title: '⚠️ Сесията изтече',
+            text: 'Моля, влезте отново в профила си.',
+        });
+    }
+
 
     const userContextValues = {
         user,
@@ -65,6 +78,7 @@ export function AuthProvider({
         registerHandler,
         loginHandler,
         logoutHandler,
+        sessionExpiredHandler,
     }
 
 
