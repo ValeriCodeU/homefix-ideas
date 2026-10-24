@@ -1,6 +1,6 @@
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 
-import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js'
+import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js';
 
 export default function IdeaCard({
     _id,
@@ -78,5 +78,5 @@ export default function IdeaCard({
                 </div>
             </div>
         </article>
-    )
+    );
 }

@@ -10,7 +10,7 @@ export const getByIdeaId = (ideaId) => {
     const sortBy = encodeURIComponent('_createdOn desc');
 
     return request(`${baseUrl}?where=${where}&load=${load}&sortBy=${sortBy}`);
-}
+};
 
 export const create = (ideaId, text, accessToken) =>
     request(baseUrl, 'POST', { ideaId, text }, accessToken);

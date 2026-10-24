@@ -1,8 +1,8 @@
-import { useTransition } from 'react'
-import { useForm } from 'react-hook-form'
+import { useTransition } from 'react';
+import { useForm } from 'react-hook-form';
 
-import FieldError from '../field-error/FieldError.jsx'
-import { commentRules } from '../../utils/validation.js'
+import FieldError from '../field-error/FieldError.jsx';
+import { commentRules } from '../../utils/validation.js';
 
 const labelClass = 'mb-1 block text-sm font-medium text-slate-700';
 const fieldClass = 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 transition-colors hover:border-slate-400 focus:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-invalid:border-red-500';
@@ -56,5 +56,5 @@ export default function IdeaCommentCreate({ onCreate }) {
                 </button>
             </div>
         </form>
-    )
+    );
 }

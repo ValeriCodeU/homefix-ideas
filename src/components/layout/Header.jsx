@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router'
-import { useContext } from 'react'
-import AuthContext from '../../contexts/AuthContext.jsx'
-import UserMenu from './UserMenu.jsx'
+import { NavLink } from 'react-router';
+import { useContext } from 'react';
+import AuthContext from '../../contexts/AuthContext.jsx';
+import UserMenu from './UserMenu.jsx';
 const navLinks = [
     { to: '/', label: 'Начало', end: true },
     { to: '/ideas', label: 'Идеи', end: true },
@@ -9,7 +9,7 @@ const navLinks = [
     { to: '/my-ideas', label: 'Моите идеи', privateOnly: true },
     { to: '/login', label: 'Вход', guestOnly: true },
     { to: '/register', label: 'Регистрация', guestOnly: true },
-]
+];
 
 const linkClass = ({ isActive }) =>
     [
@@ -18,7 +18,7 @@ const linkClass = ({ isActive }) =>
         isActive
             ? 'bg-blue-600 text-white'
             : 'text-slate-700 hover:bg-slate-200 hover:text-slate-900',
-    ].join(' ')
+    ].join(' ');
 
 export default function Header() {
 
@@ -54,5 +54,5 @@ export default function Header() {
                 )}
             </div>
         </header>
-    )
+    );
 }

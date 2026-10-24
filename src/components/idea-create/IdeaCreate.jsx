@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router'
-import { useContext } from 'react'
-import AuthContext from '../../contexts/AuthContext.jsx'
-import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router';
+import { useContext } from 'react';
+import AuthContext from '../../contexts/AuthContext.jsx';
+import Swal from 'sweetalert2';
 
-import * as ideaService from '../../services/ideaService.js'
-import IdeaForm from '../idea-form/IdeaForm.jsx'
-import { isInvalidTokenError } from '../../utils/authErrors.js'
+import * as ideaService from '../../services/ideaService.js';
+import IdeaForm from '../idea-form/IdeaForm.jsx';
+import { isInvalidTokenError } from '../../utils/authErrors.js';
 
 export default function IdeaCreate() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { user, sessionExpiredHandler } = useContext(AuthContext);
 
     const createIdeaSubmitHandler = async (data) => {
@@ -18,23 +18,23 @@ export default function IdeaCreate() {
             await Swal.fire({
                 title: '✅ Готово!',
                 text: `„${result.title}“ беше създадена успешно!`,
-            })
+            });
 
-            navigate(`/ideas/${result._id}`)
+            navigate(`/ideas/${result._id}`);
         } catch (err) {
             if (isInvalidTokenError(err)) {
-                sessionExpiredHandler()
-                return
+                sessionExpiredHandler();
+                return;
             }
 
-            console.error('Create idea error:', err)
+            console.error('Create idea error:', err);
 
             await Swal.fire({
                 title: '❌ Грешка!',
                 text: 'Идеята не може да бъде създадена. Опитайте отново.',
-            })
+            });
         }
-    }
+    };
 
     return (
         <IdeaForm
@@ -45,5 +45,5 @@ export default function IdeaCreate() {
             submitLabel="Добави идея"
             cancelTo="/ideas"
         />
-    )
+    );
 }

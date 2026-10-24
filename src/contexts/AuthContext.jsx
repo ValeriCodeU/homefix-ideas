@@ -37,7 +37,7 @@ export function AuthProvider({
         navigate('/');
 
         console.log('Registration result:', result);
-    }
+    };
 
     const loginHandler = async (data) => {
         const result = await authService.login(data.email, data.password);
@@ -47,7 +47,7 @@ export function AuthProvider({
         navigate('/');
 
         console.log('Login result:', result);
-    }
+    };
 
     const logoutHandler = async () => {
         try {
@@ -58,7 +58,7 @@ export function AuthProvider({
         setUser(null);
         localStorage.removeItem('user');
         navigate('/');
-    }
+    };
 
     const sessionExpiredHandler = () => {
         setUser(null);
@@ -69,7 +69,7 @@ export function AuthProvider({
             title: '⚠️ Сесията изтече',
             text: 'Моля, влезте отново в профила си.',
         });
-    }
+    };
 
 
     const userContextValues = {
@@ -79,7 +79,7 @@ export function AuthProvider({
         loginHandler,
         logoutHandler,
         sessionExpiredHandler,
-    }
+    };
 
 
     return (

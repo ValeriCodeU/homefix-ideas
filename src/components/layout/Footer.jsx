@@ -1,5 +1,5 @@
 export default function Footer() {
-    const currentYear = new Date().getFullYear()
+    const currentYear = new Date().getFullYear();
 
     return (
         <footer className="border-t border-slate-200 bg-white">
@@ -8,5 +8,5 @@ export default function Footer() {
                 <p>&copy; {currentYear} HomeFix Ideas. Курсов проект за SoftUni.</p>
             </div>
         </footer>
-    )
+    );
 }

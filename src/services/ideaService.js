@@ -8,7 +8,7 @@ export const getAll = (query) => {
         return request(`${baseUrl}?${query}`);
     }
     return request(baseUrl);
-}
+};
 
 export const getById = (ideaId) =>
     request(`${baseUrl}/${ideaId}`);
@@ -18,7 +18,7 @@ export const getByOwnerId = (ownerId) => {
     const sortBy = encodeURIComponent('_createdOn desc');
 
     return request(`${baseUrl}?where=${where}&sortBy=${sortBy}`);
-}
+};
 
 export const create = (ideaData, accessToken) =>
     request(baseUrl, 'POST', ideaData, accessToken);

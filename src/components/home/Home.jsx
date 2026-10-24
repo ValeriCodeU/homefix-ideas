@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
-import * as ideaService from '../../services/ideaService.js'
-import IdeaCard from '../idea-card/IdeaCard.jsx'
-import SkeletonCard from '../skeleton-card/SkeletonCard.jsx'
-import { categoryOptions } from '../../utils/ideaOptions.js'
+import * as ideaService from '../../services/ideaService.js';
+import IdeaCard from '../idea-card/IdeaCard.jsx';
+import SkeletonCard from '../skeleton-card/SkeletonCard.jsx';
+import { categoryOptions } from '../../utils/ideaOptions.js';
 
 const params = new URLSearchParams();
 params.append('sortBy', '_createdOn desc');
@@ -13,9 +13,9 @@ params.append('pageSize', '3');
 const query = params.toString().replace(/\+/g, '%20');
 
 export default function Home() {
-    const [latestIdeas, setLatestIdeas] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState('')
+    const [latestIdeas, setLatestIdeas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         ideaService.getAll(query)
@@ -30,15 +30,15 @@ export default function Home() {
                 // const sorted = [...ideas].sort((a, b) => b._createdOn - a._createdOn)
                 // setLatestIdeas(sorted.slice(0, 3))
 
-                setLatestIdeas(ideas)
+                setLatestIdeas(ideas);
             })
             .catch(() => {
-                setError('В момента идеите не могат да бъдат заредени. Опитайте отново по-късно.')
+                setError('В момента идеите не могат да бъдат заредени. Опитайте отново по-късно.');
             })
             .finally(() => {
-                setIsLoading(false)
-            })
-    }, [])
+                setIsLoading(false);
+            });
+    }, []);
 
     return (
         <div className="space-y-16">
@@ -128,5 +128,5 @@ export default function Home() {
                 </div>
             </section>
         </div>
-    )
+    );
 }

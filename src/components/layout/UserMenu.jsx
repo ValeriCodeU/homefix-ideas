@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 
-import { getDisplayName } from '../../utils/userDisplay.js'
+import { getDisplayName } from '../../utils/userDisplay.js';
 
 export default function UserMenu({
     email,
@@ -99,5 +99,5 @@ export default function UserMenu({
                 </div>
             )}
         </div>
-    )
+    );
 }

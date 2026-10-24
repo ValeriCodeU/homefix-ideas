@@ -1,5 +1,5 @@
-import { getDisplayName } from '../../utils/userDisplay.js'
-import { formatDate } from '../../utils/formatDate.js'
+import { getDisplayName } from '../../utils/userDisplay.js';
+import { formatDate } from '../../utils/formatDate.js';
 
 export default function IdeaCommentList({
     comments,
@@ -11,7 +11,7 @@ export default function IdeaCommentList({
             <p className="rounded-lg border border-dashed border-slate-300 p-6 text-center text-slate-600">
                 Все още няма коментари. Споделете пръв опит или въпрос!
             </p>
-        )
+        );
     }
 
     return (
@@ -52,8 +52,8 @@ export default function IdeaCommentList({
                             </p>
                         </div>
                     </li>
-                )
+                );
             })}
         </ul>
-    )
+    );
 }

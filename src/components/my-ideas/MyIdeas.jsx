@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
-import * as ideaService from '../../services/ideaService.js'
-import AuthContext from '../../contexts/AuthContext.jsx'
-import IdeaCard from '../idea-card/IdeaCard.jsx'
-import SkeletonCard from '../skeleton-card/SkeletonCard.jsx'
-import { getDisplayName } from '../../utils/userDisplay.js'
+import * as ideaService from '../../services/ideaService.js';
+import AuthContext from '../../contexts/AuthContext.jsx';
+import IdeaCard from '../idea-card/IdeaCard.jsx';
+import SkeletonCard from '../skeleton-card/SkeletonCard.jsx';
+import { getDisplayName } from '../../utils/userDisplay.js';
 
 const getIdeasLabel = (count) => {
     if (count === 1) {
@@ -13,7 +13,7 @@ const getIdeasLabel = (count) => {
     }
 
     return `${count} публикувани идеи`;
-}
+};
 
 export default function MyIdeas() {
 
@@ -112,5 +112,5 @@ export default function MyIdeas() {
                 </div>
             )}
         </section>
-    )
+    );
 }

@@ -12,5 +12,5 @@ export default function SkeletonCard() {
                 <div className="h-4 w-5/6 rounded bg-slate-200" />
             </div>
         </div>
-    )
+    );
 }

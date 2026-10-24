@@ -1,15 +1,15 @@
-import { startTransition, useContext, useEffect, useOptimistic, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router'
-import Swal from 'sweetalert2'
+import { startTransition, useContext, useEffect, useOptimistic, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router';
+import Swal from 'sweetalert2';
 
-import * as ideaService from '../../services/ideaService.js'
-import * as commentService from '../../services/commentService.js'
-import AuthContext from '../../contexts/AuthContext.jsx'
-import IdeaCommentCreate from '../idea-comment-create/IdeaCommentCreate.jsx'
-import IdeaCommentList from '../idea-comment-list/IdeaCommentList.jsx'
-import IdeaLikes from '../idea-likes/IdeaLikes.jsx'
-import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js'
-import { isInvalidTokenError } from '../../utils/authErrors.js'
+import * as ideaService from '../../services/ideaService.js';
+import * as commentService from '../../services/commentService.js';
+import AuthContext from '../../contexts/AuthContext.jsx';
+import IdeaCommentCreate from '../idea-comment-create/IdeaCommentCreate.jsx';
+import IdeaCommentList from '../idea-comment-list/IdeaCommentList.jsx';
+import IdeaLikes from '../idea-likes/IdeaLikes.jsx';
+import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js';
+import { isInvalidTokenError } from '../../utils/authErrors.js';
 
 const hasValue = (value) =>
     value !== undefined && value !== null && value !== '';
@@ -59,12 +59,12 @@ export default function IdeaDetails() {
                 if (!ignore) {
                     setIsLoading(false);
                 }
-            })
+            });
 
         return () => {
             ignore = true;
         };
-    }, [ideaId])
+    }, [ideaId]);
 
     useEffect(() => {
         let ignore = false;
@@ -84,12 +84,12 @@ export default function IdeaDetails() {
                 if (!ignore) {
                     setIsCommentsLoading(false);
                 }
-            })
+            });
 
         return () => {
             ignore = true;
         };
-    }, [ideaId])
+    }, [ideaId]);
 
     const createCommentHandler = async (text) => {
         const author = { _id: user._id, email: user.email };
@@ -327,5 +327,5 @@ export default function IdeaDetails() {
             )}
         </div>
 
-    )
+    );
 }

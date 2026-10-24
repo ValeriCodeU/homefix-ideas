@@ -1,7 +1,7 @@
-import { useContext } from 'react'
-import { Navigate, Outlet } from 'react-router'
+import { useContext } from 'react';
+import { Navigate, Outlet } from 'react-router';
 
-import AuthContext from '../../contexts/AuthContext.jsx'
+import AuthContext from '../../contexts/AuthContext.jsx';
 
 export default function GuestRoute() {
 

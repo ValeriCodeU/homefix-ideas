@@ -1,19 +1,19 @@
-import { Link } from 'react-router'
-import { useContext } from 'react'
-import { useForm } from 'react-hook-form'
-import Swal from 'sweetalert2'
+import { Link } from 'react-router';
+import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
-import AuthContext from '../../contexts/AuthContext.jsx'
-import FieldError from '../field-error/FieldError.jsx'
-import { emailRules, loginPasswordRules } from '../../utils/validation.js'
+import AuthContext from '../../contexts/AuthContext.jsx';
+import FieldError from '../field-error/FieldError.jsx';
+import { emailRules, loginPasswordRules } from '../../utils/validation.js';
 
 const initialValues = {
     email: '',
     password: '',
-}
+};
 
-const labelClass = 'mb-1 block text-sm font-medium text-slate-700'
-const fieldClass = 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 transition-colors hover:border-slate-400 focus:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-invalid:border-red-500'
+const labelClass = 'mb-1 block text-sm font-medium text-slate-700';
+const fieldClass = 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 transition-colors hover:border-slate-400 focus:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-invalid:border-red-500';
 
 export default function Login() {
 
@@ -40,7 +40,7 @@ export default function Login() {
                     : 'Възникна грешка. Опитайте отново по-късно.',
             });
         }
-    }
+    };
 
     return (
         <div className="mx-auto max-w-md space-y-6">
@@ -99,5 +99,5 @@ export default function Login() {
                 </Link>
             </p>
         </div>
-    )
+    );
 }

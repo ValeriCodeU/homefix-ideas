@@ -14,8 +14,8 @@ export default function useLocalStorage(key, initialValue) {
         
         localStorage.setItem(key, JSON.stringify(value));
         setState(value);
-    }
+    };
     
-    return [state, setPersistedState]
+    return [state, setPersistedState];
 
 }

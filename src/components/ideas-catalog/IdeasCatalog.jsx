@@ -1,41 +1,41 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
-import * as ideaService from '../../services/ideaService.js'
-import IdeaCard from '../idea-card/IdeaCard.jsx'
-import SkeletonCard from '../skeleton-card/SkeletonCard.jsx'
+import * as ideaService from '../../services/ideaService.js';
+import IdeaCard from '../idea-card/IdeaCard.jsx';
+import SkeletonCard from '../skeleton-card/SkeletonCard.jsx';
 
 export default function IdeasCatalog() {
 
-    const [ideas, setIdeas] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState('')
+    const [ideas, setIdeas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
 
-        let ignore = false
+        let ignore = false;
 
         ideaService.getAll()
             .then((result) => {
-                if (ignore) return
-                const sorted = [...result].sort((a, b) => b._createdOn - a._createdOn)
-                setIdeas(sorted)
+                if (ignore) return;
+                const sorted = [...result].sort((a, b) => b._createdOn - a._createdOn);
+                setIdeas(sorted);
             })
             .catch(() => {
                 if (!ignore) {
-                    setError('В момента идеите не могат да бъдат заредени. Опитайте отново по-късно.')
+                    setError('В момента идеите не могат да бъдат заредени. Опитайте отново по-късно.');
                 }
             })
             .finally(() => {
                 if (!ignore) {
-                    setIsLoading(false)
+                    setIsLoading(false);
                 }
-            })
+            });
 
         return () => {
-            ignore = true
-        }
-    }, [])
+            ignore = true;
+        };
+    }, []);
 
     return (
         <section className="space-y-6">
@@ -91,5 +91,5 @@ export default function IdeasCatalog() {
                 </div>
             )}
         </section>
-    )
+    );
 }

@@ -9,7 +9,7 @@ export const getByIdeaId = (ideaId) => {
     const where = encodeURIComponent(`ideaId="${ideaId}"`);
 
     return request(`${baseUrl}?where=${where}`);
-}
+};
 
 export const create = (ideaId, accessToken) =>
     request(baseUrl, 'POST', { ideaId }, accessToken);

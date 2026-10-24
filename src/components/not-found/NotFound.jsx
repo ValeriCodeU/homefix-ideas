@@ -8,5 +8,5 @@ export default function NotFound() {
                 върнете към идеите.
             </p>
         </section>
-    )
+    );
 }
