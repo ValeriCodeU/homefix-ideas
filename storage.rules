@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Idea images uploaded by the React app (src/services/imageService.js).
+// The app's users log in through the SoftUni Practice Server, not Firebase Authentication,
+// so request.auth is always null and these rules can only check the request itself.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /ideas/{fileName} {
+      // Anyone may open an image by its URL, but nobody may list the folder.
+      allow get: if true;
+
+      // Only new files (no overwriting), declared as JPEG, PNG or WebP, smaller than 5 MB.
+      // contentType is the type declared by the client, not the real file content.
+      allow create: if resource == null
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp)');
+
+      // update (metadata) and delete are not allowed.
+    }
+  }
+}

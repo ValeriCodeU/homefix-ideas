@@ -30,7 +30,8 @@ export const confirmPasswordRules = {
     },
 };
 
-const URL_PATTERN = /^https?:\/\/.+/;
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 export const ideaRules = {
     title: {
@@ -58,10 +59,23 @@ export const ideaRules = {
         },
         valueAsNumber: true,
     },
-    imageUrl: {
-        pattern: {
-            value: URL_PATTERN,
-            message: 'Връзката трябва да започва с http:// или https://.',
+    imageFile: {
+        validate: (files) => {
+            if (!files || files.length === 0) {
+                return true;
+            }
+
+            const file = files[0];
+
+            if (!IMAGE_TYPES.includes(file.type)) {
+                return 'Снимката трябва да е във формат JPEG, PNG или WebP.';
+            }
+
+            if (file.size >= MAX_IMAGE_SIZE) {
+                return 'Снимката трябва да е до 5 MB.';
+            }
+
+            return true;
         },
     },
     materials: {

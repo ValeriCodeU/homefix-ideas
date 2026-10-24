@@ -8,12 +8,14 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "firebase emulators:start --only functions --inspect-functions",
+    "server": "firebase emulators:start --only functions,storage --inspect-functions",
     "deploy:server": "firebase deploy --only functions",
-    "deploy:client": "npm run build && firebase deploy --only hosting"
+    "deploy:client": "npm run build && firebase deploy --only hosting",
+    "deploy:rules": "firebase deploy --only storage"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "firebase": "^13.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-hook-form": "^7.82.0",
