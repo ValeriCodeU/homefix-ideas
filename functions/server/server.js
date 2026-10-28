@@ -1341,7 +1341,7 @@
                 "estimatedCost": 15,
                 "materials": "Кабелни скоби, двойнозалепваща лента и велкро ленти",
                 "description": "Лесен начин да подредите зарядните устройства и кабелите под бюрото, така че да не се виждат и да не се заплитат.",
-                "imageUrl": "",
+                "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-cable-organizer.jpg?alt=media&token=843e9f56-03b1-4d51-888a-e40462c6b0b1",
                 "_createdOn": 1782896400000
             },
 
@@ -1353,7 +1353,7 @@
                 "estimatedCost": 30,
                 "materials": "Дървена дъска, винтове, лак и две метални купички",
                 "description": "Повдигната дървена поставка за две котешки купички. Подходяща е за храна и вода и се почиства лесно.",
-                "imageUrl": "",
+                "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-cat-bowl-stand.jpg?alt=media&token=522dd6eb-c408-40ba-95cb-1d5967e8605a",
                 "_createdOn": 1783072800000
             },
 
@@ -1365,7 +1365,7 @@
                 "estimatedCost": 45,
                 "materials": "Ламинирана дъска, конзоли, дюбели и винтове",
                 "description": "Практичен стенен рафт над пералнята за съхранение на препарати, кърпи и други принадлежности за дома.",
-                "imageUrl": "",
+                "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-laundry-shelf.jpg?alt=media&token=fccbfc17-912e-4e12-8dac-8f5204be851f",
                 "_createdOn": 1783249200000
             },
 
@@ -1377,7 +1377,7 @@
                 "estimatedCost": 80,
                 "materials": "Шкурка, грунд, боя за мебели, валяк и нови дръжки",
                 "description": "Бюджетна идея за освежаване на стари кухненски шкафове чрез шлайфане, боядисване и поставяне на нови дръжки.",
-                "imageUrl": "",
+                "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-kitchen-cabinets.jpg?alt=media&token=9ad804fb-28eb-48b6-86bc-9df79d736e8e",
                 "_createdOn": 1783425600000
             },
 
@@ -1389,7 +1389,7 @@
                 "estimatedCost": 35,
                 "materials": "Дървена решетка, малки саксии, куки и боя за външни условия",
                 "description": "Компактна вертикална градина, която позволява отглеждане на билки и цветя, без да заема много място на балкона.",
-                "imageUrl": "",
+                "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-vertical-garden.jpg?alt=media&token=b1167186-115c-41ce-92ad-e936f69af4be",
                 "_createdOn": 1783602000000
             },
 
@@ -1401,7 +1401,7 @@
                 "estimatedCost": 20,
                 "materials": "Дървена дъска, метални куки, байц и крепежни елементи",
                 "description": "Семпла стенна закачалка за антре, направена от дървена дъска и няколко метални куки.",
-                "imageUrl": "",
+                "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-wooden-wall-hanger.jpg?alt=media&token=b65baa21-b3fb-441f-ae71-936098042fb4",
                 "_createdOn": 1783778400000
             },
 
@@ -1413,7 +1413,7 @@
                 "estimatedCost": 10,
                 "materials": "",
                 "description": "Малка практична поставка за ключове, която се монтира до входа.",
-                "imageUrl": "https://img.bg.favicdn.net/images/products/300x300/db7b40c0-9257-4b4d-8df2-7bd2886fcdf8.jpg",
+                "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-key-holder.jpg?alt=media&token=fbe174e0-996e-4617-bf7a-4fed2fd1c10c",
                 "_createdOn": 1784721600000
             },
         },
