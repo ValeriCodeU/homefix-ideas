@@ -20,6 +20,12 @@ export const getByOwnerId = (ownerId) => {
     return request(`${baseUrl}?where=${where}&sortBy=${sortBy}`);
 };
 
+export const getByCategory = (category) => {
+    const where = encodeURIComponent(`category="${category}"`);
+
+    return request(`${baseUrl}?where=${where}`);
+};
+
 export const create = (ideaData, accessToken) =>
     request(baseUrl, 'POST', ideaData, accessToken);
 

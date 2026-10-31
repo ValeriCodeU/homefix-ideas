@@ -115,15 +115,19 @@ export default function Home() {
                 <h2 className="text-2xl font-bold text-slate-900">Намери вдъхновение за дома</h2>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
                     {categoryOptions.map((category) => (
-                        <div
+                        <Link
                             key={category.value}
-                            className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4"
+                            to={`/ideas?category=${category.value}`}
+                            className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 transition-colors hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                         >
-                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-base font-semibold text-blue-700">
+                            <span
+                                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-base font-semibold text-blue-700"
+                                aria-hidden="true"
+                            >
                                 {category.label.charAt(0)}
                             </span>
                             <span className="font-medium text-slate-800">{category.label}</span>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </section>
