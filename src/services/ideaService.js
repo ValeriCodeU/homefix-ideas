@@ -13,6 +13,13 @@ export const getAll = (query) => {
 export const getById = (ideaId) =>
     request(`${baseUrl}/${ideaId}`);
 
+export const getByIds = (ideaIds) => {
+    const idList = ideaIds.map((id) => `"${id}"`).join(',');
+    const where = encodeURIComponent(`_id in (${idList})`);
+
+    return request(`${baseUrl}?where=${where}`);
+};
+
 export const getByOwnerId = (ownerId) => {
     const where = encodeURIComponent(`_ownerId="${ownerId}"`);
     const sortBy = encodeURIComponent('_createdOn desc');

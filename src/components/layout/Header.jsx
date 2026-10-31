@@ -7,6 +7,7 @@ const navLinks = [
     { to: '/ideas', label: 'Идеи', end: true },
     { to: '/ideas/create', label: 'Добави идея', privateOnly: true },
     { to: '/my-ideas', label: 'Моите идеи', privateOnly: true },
+    { to: '/favorites', label: 'Любими', privateOnly: true },
     { to: '/login', label: 'Вход', guestOnly: true },
     { to: '/register', label: 'Регистрация', guestOnly: true },
 ];

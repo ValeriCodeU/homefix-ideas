@@ -8,6 +8,7 @@ import IdeaCreate from './components/idea-create/IdeaCreate.jsx';
 import IdeaDetails from './components/idea-details/IdeaDetails.jsx';
 import IdeaEdit from './components/idea-edit/IdeaEdit.jsx';
 import MyIdeas from './components/my-ideas/MyIdeas.jsx';
+import FavoriteIdeas from './components/favorite-ideas/FavoriteIdeas.jsx';
 import Login from './components/login/Login.jsx';
 import Register from './components/register/Register.jsx';
 import NotFound from './components/not-found/NotFound.jsx';
@@ -34,6 +35,7 @@ export default function App() {
                         <Route path="/ideas/create" element={<IdeaCreate />} />
                         <Route path="/ideas/:ideaId/edit" element={<IdeaEdit />} />
                         <Route path="/my-ideas" element={<MyIdeas />} />
+                        <Route path="/favorites" element={<FavoriteIdeas />} />
                     </Route>
 
                     <Route path="*" element={<NotFound />} />

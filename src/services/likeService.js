@@ -11,6 +11,13 @@ export const getByIdeaId = (ideaId) => {
     return request(`${baseUrl}?where=${where}`);
 };
 
+export const getByOwnerId = (ownerId) => {
+    const where = encodeURIComponent(`_ownerId="${ownerId}"`);
+    const sortBy = encodeURIComponent('_createdOn desc');
+
+    return request(`${baseUrl}?where=${where}&sortBy=${sortBy}`);
+};
+
 export const create = (ideaId, accessToken) =>
     request(baseUrl, 'POST', { ideaId }, accessToken);
 
