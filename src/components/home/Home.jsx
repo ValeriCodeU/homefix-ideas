@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import * as ideaService from '../../services/ideaService.js';
-import IdeaCard from '../idea-card/IdeaCard.jsx';
-import SkeletonCard from '../skeleton-card/SkeletonCard.jsx';
+import IdeaList from '../idea-list/IdeaList.jsx';
 import { categoryOptions } from '../../utils/ideaOptions.js';
 
 const params = new URLSearchParams();
@@ -79,36 +78,12 @@ export default function Home() {
                     </Link>
                 </div>
 
-                {isLoading && (
-                    <div className="space-y-4">
-                        <p className="text-slate-600">Зареждане на идеите…</p>
-                        <div className="grid animate-pulse gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {Array.from({ length: 3 }).map((item, index) => (
-                                <SkeletonCard key={index} />
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {!isLoading && error && (
-                    <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-                        {error}
-                    </p>
-                )}
-
-                {!isLoading && !error && latestIdeas.length === 0 && (
-                    <p className="rounded-lg border border-slate-200 bg-white p-6 text-center text-slate-600">
-                        Все още няма добавени идеи. Бъдете първият, който ще сподели!
-                    </p>
-                )}
-
-                {!isLoading && !error && latestIdeas.length > 0 && (
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {latestIdeas.map((idea) => (
-                            <IdeaCard key={idea._id} {...idea} />
-                        ))}
-                    </div>
-                )}
+                <IdeaList
+                    ideas={latestIdeas}
+                    isLoading={isLoading}
+                    error={error}
+                    emptyMessage="Все още няма добавени идеи. Бъдете първият, който ще сподели!"
+                />
             </section>
 
             <section className="space-y-6">

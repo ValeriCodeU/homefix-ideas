@@ -1,11 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router';
 
 import * as ideaService from '../../services/ideaService.js';
 import * as likeService from '../../services/likeService.js';
 import AuthContext from '../../contexts/AuthContext.jsx';
-import IdeaCard from '../idea-card/IdeaCard.jsx';
-import SkeletonCard from '../skeleton-card/SkeletonCard.jsx';
+import IdeaList from '../idea-list/IdeaList.jsx';
 
 const getFavoritesLabel = (count) => {
     if (count === 1) {
@@ -79,45 +77,15 @@ export default function FavoriteIdeas() {
                 )}
             </div>
 
-            {isLoading && (
-                <div className="space-y-4">
-                    <p className="text-slate-600">Зареждане на любимите ви идеи…</p>
-                    <div className="grid animate-pulse gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {Array.from({ length: 3 }).map((item, index) => (
-                            <SkeletonCard key={index} />
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {!isLoading && error && (
-                <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-                    {error}
-                </p>
-            )}
-
-            {!isLoading && !error && ideas.length === 0 && (
-                <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
-                    <p className="text-slate-600">Все още нямате любими идеи.</p>
-                    <p className="mt-1 text-sm text-slate-500">
-                        Натиснете „Харесай“ на страницата на идея и тя ще се появи тук.
-                    </p>
-                    <Link
-                        to="/ideas"
-                        className="mt-4 inline-block rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    >
-                        Разгледай идеите
-                    </Link>
-                </div>
-            )}
-
-            {!isLoading && !error && ideas.length > 0 && (
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {ideas.map((idea) => (
-                        <IdeaCard key={idea._id} {...idea} />
-                    ))}
-                </div>
-            )}
+            <IdeaList
+                ideas={ideas}
+                isLoading={isLoading}
+                error={error}
+                loadingText="Зареждане на любимите ви идеи…"
+                emptyMessage="Все още нямате любими идеи. Натиснете „Харесай“ на страницата на идея и тя ще се появи тук."
+                emptyLinkTo="/ideas"
+                emptyLinkLabel="Разгледай идеите"
+            />
         </section>
     );
 }

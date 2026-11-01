@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 
 import * as ideaService from '../../services/ideaService.js';
-import IdeaCard from '../idea-card/IdeaCard.jsx';
-import SkeletonCard from '../skeleton-card/SkeletonCard.jsx';
+import IdeaList from '../idea-list/IdeaList.jsx';
 import { categoryOptions } from '../../utils/ideaOptions.js';
 
 const loadIdeas = (category) => {
@@ -12,6 +11,14 @@ const loadIdeas = (category) => {
     }
 
     return ideaService.getAll();
+};
+
+const getEmptyMessage = (selectedCategory) => {
+    if (selectedCategory) {
+        return `В категория „${selectedCategory.label}“ все още няма идеи.`;
+    }
+
+    return 'Все още няма добавени идеи.';
 };
 
 export default function IdeasCatalog() {
@@ -110,49 +117,15 @@ export default function IdeasCatalog() {
                 )}
             </div>
 
-            {isLoading && (
-                <div className="space-y-4">
-                    <p className="text-slate-600">Зареждане на идеите…</p>
-                    <div className="grid animate-pulse gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {Array.from({ length: 6 }).map((item, index) => (
-                            <SkeletonCard key={index} />
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {!isLoading && error && (
-                <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-                    {error}
-                </p>
-            )}
-
-            {!isLoading && !error && ideas.length === 0 && (
-                <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
-                    {!selectedCategory && (
-                        <p className="text-slate-600">Все още няма добавени идеи.</p>
-                    )}
-                    {selectedCategory && (
-                        <p className="text-slate-600">
-                            В категория „{selectedCategory.label}“ все още няма идеи.
-                        </p>
-                    )}
-                    <Link
-                        to="/ideas/create"
-                        className="mt-4 inline-block rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    >
-                        Сподели първата идея
-                    </Link>
-                </div>
-            )}
-
-            {!isLoading && !error && ideas.length > 0 && (
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {ideas.map((idea) => (
-                        <IdeaCard key={idea._id} {...idea} />
-                    ))}
-                </div>
-            )}
+            <IdeaList
+                ideas={ideas}
+                isLoading={isLoading}
+                error={error}
+                skeletonCount={6}
+                emptyMessage={getEmptyMessage(selectedCategory)}
+                emptyLinkTo="/ideas/create"
+                emptyLinkLabel="Сподели първата идея"
+            />
         </section>
     );
 }
