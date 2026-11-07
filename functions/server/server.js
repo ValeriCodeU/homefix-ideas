@@ -1434,6 +1434,55 @@
                 "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
                 "ideaId": "99871629-677a-43fd-b58c-51aec364583b",
                 "_createdOn": 1783511000000
+            },
+
+            //8 нови seed харесвания с измислени _ownerId, които не са акаунти
+            "5c8aa2f2-12b8-4cd9-a114-af6503e99dbe": {
+                "_ownerId": "5fcbb45f-e0a2-4e71-8bb9-2c586fceaa23",
+                "ideaId": "6a1d46e3-50f4-4e41-a9cb-7086e81d6921",
+                "_createdOn": 1783069200000
+            },
+
+            "816f98cd-d7bd-4a13-8e0f-1e1097a5f423": {
+                "_ownerId": "09f84e43-664b-4f25-870d-9e0ca52e072b",
+                "ideaId": "6a1d46e3-50f4-4e41-a9cb-7086e81d6921",
+                "_createdOn": 1783155600000
+            },
+
+            "7f9f5a62-c014-4bc0-8080-f4795c41437b": {
+                "_ownerId": "6d199de9-eed0-4d11-9380-ef956fba4632",
+                "ideaId": "6a1d46e3-50f4-4e41-a9cb-7086e81d6921",
+                "_createdOn": 1783242000000
+            },
+
+            "6759f28b-7380-43de-bbba-02b499a7f050": {
+                "_ownerId": "5fcbb45f-e0a2-4e71-8bb9-2c586fceaa23",
+                "ideaId": "99871629-677a-43fd-b58c-51aec364583b",
+                "_createdOn": 1783598400000
+            },
+
+            "a921853b-6bf1-46f0-a68e-82a4938693a4": {
+                "_ownerId": "09f84e43-664b-4f25-870d-9e0ca52e072b",
+                "ideaId": "99871629-677a-43fd-b58c-51aec364583b",
+                "_createdOn": 1783684800000
+            },
+
+            "4f1886f4-e5bf-49cc-91b1-97cfd1ab759f": {
+                "_ownerId": "5fcbb45f-e0a2-4e71-8bb9-2c586fceaa23",
+                "ideaId": "77cf713f-1256-448a-a346-d5449f63a560",
+                "_createdOn": 1783776000000
+            },
+
+            "ee6078f8-560d-4b4d-8232-65669858e5b6": {
+                "_ownerId": "09f84e43-664b-4f25-870d-9e0ca52e072b",
+                "ideaId": "ce36c665-d95f-4caa-82ae-c88dc0627135",
+                "_createdOn": 1783335600000
+            },
+
+            "5fa3f21f-a83f-496c-b53e-74ae95d081b4": {
+                "_ownerId": "6d199de9-eed0-4d11-9380-ef956fba4632",
+                "ideaId": "1b7f9625-7fe5-4fb6-a2e9-d009aa195def",
+                "_createdOn": 1783864800000
             }
         },
         comments: {
