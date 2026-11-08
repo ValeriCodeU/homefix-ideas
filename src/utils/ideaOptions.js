@@ -13,6 +13,16 @@ export const difficultyOptions = [
     { value: 'Hard', label: 'Трудно' },
 ];
 
+export const sortOptions = [
+    { value: 'newest', label: 'Най-нови' },
+    { value: 'likes', label: 'Най-харесвани' },
+];
+
+export const favoriteSortOptions = [
+    { value: 'recentlyLiked', label: 'Последно харесани' },
+    ...sortOptions,
+];
+
 export function getOptionLabel(options, value) {
     const option = options.find((item) => item.value === value);
 

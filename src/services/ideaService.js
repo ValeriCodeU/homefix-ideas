@@ -1,8 +1,8 @@
 import request from './request';
 
-// const baseUrl = 'http://localhost:3030/data/ideas';
 const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
 const baseUrl = `${SERVER_URL}/data/ideas`;
+
 export const getAll = (query) => {
     if (query) {
         return request(`${baseUrl}?${query}`);
@@ -25,12 +25,6 @@ export const getByOwnerId = (ownerId) => {
     const sortBy = encodeURIComponent('_createdOn desc');
 
     return request(`${baseUrl}?where=${where}&sortBy=${sortBy}`);
-};
-
-export const getByCategory = (category) => {
-    const where = encodeURIComponent(`category="${category}"`);
-
-    return request(`${baseUrl}?where=${where}`);
 };
 
 export const create = (ideaData, accessToken) =>

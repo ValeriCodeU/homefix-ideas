@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import * as ideaService from '../../services/ideaService.js';
+import * as likeService from '../../services/likeService.js';
 import IdeaList from '../idea-list/IdeaList.jsx';
 import { categoryOptions } from '../../utils/ideaOptions.js';
 
@@ -17,26 +18,28 @@ export default function Home() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        ideaService.getAll(query)
+        let ignore = false;
+
+        likeService.withLikesCount(ideaService.getAll(query))
             .then((ideas) => {
-                //ако се ползва за тест - услугата на SoftUni Practise Server - jsonstore, която връщаше обект
-                //     const ideasArray = Object.values(ideas);
-                //     const sortedIdeas = ideasArray.sort((a, b) => b._createdOn - a._createdOn);
-                //     const latestThreeIdeas = sortedIdeas.slice(0, 3);
-                //     setLatestIdeas(latestThreeIdeas);
-                // })
-                //client side sorting, замененено с услуга на сървъра, която връща сортирани идеи
-                // const sorted = [...ideas].sort((a, b) => b._createdOn - a._createdOn)
-                // setLatestIdeas(sorted.slice(0, 3))
+                if (ignore) return;
 
                 setLatestIdeas(ideas);
             })
             .catch(() => {
-                setError('В момента идеите не могат да бъдат заредени. Опитайте отново по-късно.');
+                if (!ignore) {
+                    setError('В момента идеите не могат да бъдат заредени. Опитайте отново по-късно.');
+                }
             })
             .finally(() => {
-                setIsLoading(false);
+                if (!ignore) {
+                    setIsLoading(false);
+                }
             });
+
+        return () => {
+            ignore = true;
+        };
     }, []);
 
     return (

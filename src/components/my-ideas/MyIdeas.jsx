@@ -1,8 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
 import * as ideaService from '../../services/ideaService.js';
+import * as likeService from '../../services/likeService.js';
 import AuthContext from '../../contexts/AuthContext.jsx';
+import useIdeaFilters from '../../hooks/useIdeaFilters.js';
+import IdeaFilters from '../idea-filters/IdeaFilters.jsx';
 import IdeaList from '../idea-list/IdeaList.jsx';
+import Pagination from '../pagination/Pagination.jsx';
 import { getDisplayName } from '../../utils/userDisplay.js';
 
 const getIdeasLabel = (count) => {
@@ -22,10 +27,23 @@ export default function MyIdeas() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const {
+        category,
+        search,
+        sort,
+        hasFilters,
+        showFilters,
+        pageIdeas,
+        currentPage,
+        totalPages,
+        filterChangeHandler,
+        pageChangeHandler,
+    } = useIdeaFilters(ideas);
+
     useEffect(() => {
         let ignore = false;
 
-        ideaService.getByOwnerId(userId)
+        likeService.withLikesCount(ideaService.getByOwnerId(userId))
             .then((result) => {
                 if (ignore) return;
 
@@ -53,7 +71,17 @@ export default function MyIdeas() {
         <section className="space-y-6">
             <div className="space-y-1">
                 <h1 className="text-3xl font-bold text-slate-900">Моите идеи</h1>
-                <p className="text-slate-600">Идеите, които сте споделили с общността.</p>
+                <p className="text-slate-600">
+                    Идеите, които сте споделили с общността.{' '}
+                    {hasFilters && (
+                        <Link
+                            to="/my-ideas"
+                            className="font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        >
+                            Изчисти филтрите
+                        </Link>
+                    )}
+                </p>
             </div>
 
             <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -73,14 +101,29 @@ export default function MyIdeas() {
                 </div>
             </div>
 
+            {showFilters && (
+                <IdeaFilters
+                    search={search}
+                    category={category}
+                    sort={sort}
+                    onFilterChange={filterChangeHandler}
+                />
+            )}
+
             <IdeaList
-                ideas={ideas}
+                ideas={pageIdeas}
                 isLoading={isLoading}
                 error={error}
                 loadingText="Зареждане на идеите ви…"
-                emptyMessage="Все още нямате публикувани идеи."
-                emptyLinkTo="/ideas/create"
-                emptyLinkLabel="Добави първата си идея"
+                emptyMessage={hasFilters ? 'Няма идеи по тези критерии.' : 'Все още нямате публикувани идеи.'}
+                emptyLinkTo={hasFilters ? '/my-ideas' : '/ideas/create'}
+                emptyLinkLabel={hasFilters ? 'Изчисти филтрите' : 'Добави първата си идея'}
+            />
+
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={pageChangeHandler}
             />
         </section>
     );

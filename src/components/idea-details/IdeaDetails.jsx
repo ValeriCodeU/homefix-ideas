@@ -1,5 +1,5 @@
 import { startTransition, useContext, useEffect, useOptimistic, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import Swal from 'sweetalert2';
 
 import * as ideaService from '../../services/ideaService.js';
@@ -16,6 +16,10 @@ const hasValue = (value) =>
 
 export default function IdeaDetails() {
     const { ideaId } = useParams();
+    const location = useLocation();
+
+    // Картата подава адреса на списъка през state. При директно отваряне на идеята него го няма
+    const backTo = location.state?.backTo ?? '/ideas';
 
     const { user, isAuthenticated, sessionExpiredHandler } = useContext(AuthContext);
     const accessToken = user?.accessToken;
@@ -168,10 +172,10 @@ export default function IdeaDetails() {
     return (
         <div className="space-y-6">
             <Link
-                to="/ideas"
+                to={backTo}
                 className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
             >
-                &larr; Назад към идеите
+                &larr; Назад
             </Link>
 
             {isLoading && (

@@ -1,9 +1,18 @@
 import request from './request';
-
-// const baseUrl = 'http://localhost:3030/data/likes';
+import { addLikesCount } from '../utils/ideaQuery.js';
 
 const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
 const baseUrl = `${SERVER_URL}/data/likes`;
+
+const getAllIdeaIds = () =>
+    request(`${baseUrl}?select=ideaId`);
+
+// Получава вече стартираната заявка за идеите, а не резултата ѝ, за да вървят двете заявки едновременно
+export const withLikesCount = async (ideasRequest) => {
+    const [ideas, likes] = await Promise.all([ideasRequest, getAllIdeaIds()]);
+
+    return addLikesCount(ideas, likes);
+};
 
 export const getByIdeaId = (ideaId) => {
     const where = encodeURIComponent(`ideaId="${ideaId}"`);
