@@ -1,6 +1,5 @@
 import request from './request';
 
-// const baseUrl = 'http://localhost:3030/data/comments';
 const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
 const baseUrl = `${SERVER_URL}/data/comments`;
 
@@ -14,6 +13,3 @@ export const getByIdeaId = (ideaId) => {
 
 export const create = (ideaId, text, accessToken) =>
     request(baseUrl, 'POST', { ideaId, text }, accessToken);
-
-export const remove = (commentId, accessToken) =>
-    request(`${baseUrl}/${commentId}`, 'DELETE', undefined, accessToken);

@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 export default function NotFound() {
 
     return (
@@ -7,6 +9,12 @@ export default function NotFound() {
                 Търсеният адрес не съществува. Използвайте навигацията, за да се
                 върнете към идеите.
             </p>
+            <Link
+                to="/ideas"
+                className="inline-block rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+                Към идеите
+            </Link>
         </section>
     );
 }

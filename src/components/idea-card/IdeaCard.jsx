@@ -66,14 +66,6 @@ export default function IdeaCard({
                 )}
 
                 <div className="mt-auto flex items-center justify-between pt-2">
-                    {/* {estimatedCost
-                        ? (
-                            <span className="text-sm font-medium text-slate-700">
-                                Ориентировъчно: {estimatedCost}
-                            </span>
-                        )
-                        : <span />
-                    } */}
                     {estimatedCost !== undefined &&
                         estimatedCost !== null &&
                         estimatedCost !== '' && (

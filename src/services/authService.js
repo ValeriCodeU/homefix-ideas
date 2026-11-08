@@ -1,6 +1,5 @@
 import request from './request';
 
-// const baseUrl = 'http://localhost:3030/users';
 const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
 const baseUrl = `${SERVER_URL}/users`;
 

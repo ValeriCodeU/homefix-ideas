@@ -4,9 +4,6 @@ import { useForm } from 'react-hook-form';
 import FieldError from '../field-error/FieldError.jsx';
 import { commentRules } from '../../utils/validation.js';
 
-const labelClass = 'mb-1 block text-sm font-medium text-slate-700';
-const fieldClass = 'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 transition-colors hover:border-slate-400 focus:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-invalid:border-red-500';
-
 export default function IdeaCommentCreate({ onCreate }) {
 
     const [isPending, startTransition] = useTransition();
@@ -34,14 +31,14 @@ export default function IdeaCommentCreate({ onCreate }) {
     return (
         <form className="space-y-3" onSubmit={handleSubmit(submitHandler)} noValidate>
             <div>
-                <label htmlFor="comment-text" className={labelClass}>Вашият коментар</label>
+                <label htmlFor="comment-text" className="form-label">Вашият коментар</label>
                 <textarea
                     id="comment-text"
                     {...register('text', commentRules)}
                     rows="3"
                     placeholder="Споделете опит, съвет или въпрос към автора…"
                     aria-invalid={!!errors.text}
-                    className={fieldClass}
+                    className="form-field"
                 />
                 <FieldError message={errors.text?.message} />
             </div>

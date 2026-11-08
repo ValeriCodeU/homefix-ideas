@@ -7,10 +7,8 @@ import useLocalStorage from '../hooks/useLocalStorage.js';
 const AuthContext = createContext({
     isAuthenticated: false,
     user: {
-        email: '',
-        password: '',
-        _createdOn: '',
         _id: '',
+        email: '',
         accessToken: '',
     },
     registerHandler() { },
@@ -19,12 +17,19 @@ const AuthContext = createContext({
     sessionExpiredHandler() { },
 });
 
+// Сървърът връща целия запис на потребителя, а за регистрираните и паролата в чист вид.
+// В state и в localStorage пазим само полетата, които приложението ползва
+const toSessionUser = (result) => ({
+    _id: result._id,
+    email: result.email,
+    accessToken: result.accessToken,
+});
+
 
 export function AuthProvider({
     children
 }) {
 
-    // const [user, setUser] = useState(null);
     const [user, setUser] = useLocalStorage('user', null);
     const navigate = useNavigate();
 
@@ -32,21 +37,17 @@ export function AuthProvider({
 
         const result = await authService.register(data.email, data.password);
 
-        setUser(result);
+        setUser(toSessionUser(result));
 
         navigate('/');
-
-        console.log('Registration result:', result);
     };
 
     const loginHandler = async (data) => {
         const result = await authService.login(data.email, data.password);
 
-        setUser(result);
+        setUser(toSessionUser(result));
 
         navigate('/');
-
-        console.log('Login result:', result);
     };
 
     const logoutHandler = async () => {
