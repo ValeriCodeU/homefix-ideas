@@ -815,13 +815,40 @@
 
 
     function initPlugin(settings) {
-        const storage = createInstance(settings.seedData);
-        const protectedStorage = createInstance(settings.protectedData);
+        let storage = createInstance(settings.seedData);
+        let protectedStorage = createInstance(settings.protectedData);
+
+        // Firebase: functions/index.js saves the data in Cloud Storage and loads it back after a restart.
+        // The saved object has the same format as seedData and protectedData below.
+        settings.exportData = () => ({
+            seedData: exportInstance(storage),
+            protectedData: exportInstance(protectedStorage)
+        });
+
+        settings.importData = (data) => {
+            storage = createInstance(data.seedData);
+            protectedStorage = createInstance(data.protectedData);
+        };
 
         return function decoreateContext(context, request) {
             context.storage = storage;
             context.protectedStorage = protectedStorage;
         };
+    }
+
+    // Firebase: converts a storage instance back to the seed data format { collection: { id: record } }
+    function exportInstance(instance) {
+        const result = {};
+
+        for (const collectionName of instance.get()) {
+            result[collectionName] = {};
+
+            for (const { _id, ...record } of instance.get(collectionName)) {
+                result[collectionName][_id] = record;
+            }
+        }
+
+        return result;
     }
 
 
@@ -1408,10 +1435,10 @@
             "dc0291b6-d132-48ec-9974-b224a0fdaae3": {
                 "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
                 "title": "Поставка за ключове до входната врата",
-                "category": "",
-                "difficulty": "",
+                "category": "Organization",
+                "difficulty": "Easy",
                 "estimatedCost": 10,
-                "materials": "",
+                "materials": "Дървена дъска, 5 метални куки, дюбели и винтове",
                 "description": "Малка практична поставка за ключове, която се монтира до входа.",
                 "imageUrl": "https://firebasestorage.googleapis.com/v0/b/homefix-ideas-app.firebasestorage.app/o/ideas%2Fseed-key-holder.jpg?alt=media&token=fbe174e0-996e-4617-bf7a-4fed2fd1c10c",
                 "_createdOn": 1784721600000
@@ -1533,6 +1560,10 @@
     ];
 
     const server = http__default['default'].createServer(requestHandler(plugins, services));
+
+    // Firebase: used by functions/index.js
+    server.exportData = settings.exportData;
+    server.importData = settings.importData;
 
     return server;
 
