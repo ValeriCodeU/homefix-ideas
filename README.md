@@ -22,6 +22,8 @@ Open https://homefix-ideas-app.web.app. Nothing needs to be installed.
 
 You can also register a new account. All data is saved permanently (see [Data persistence](#data-persistence)). Because of that, please delete only ideas that you created yourself, so the demo data stays the same for other reviewers.
 
+**About the demo content:** the seed ideas, comments, likes and the two demo accounts are sample data written for this project. The photos of the seed ideas were generated with AI to illustrate the examples. Photos that users add through the app are uploaded by them.
+
 A short tour that covers the main requirements:
 
 1. **As a guest**, open „Идеи“ (Ideas). Try the search (for example `рафт`), the category filter and the sorting by „Най-харесвани“ (Most liked), move to page 2 and open an idea. Then open `/ideas/create` directly: you are redirected to the login page.
