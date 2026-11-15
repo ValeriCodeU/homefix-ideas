@@ -1,10 +1,11 @@
+// icon е име на икона от src/components/icon/Icon.jsx
 export const categoryOptions = [
-    { value: 'Organization', label: 'Организация' },
-    { value: 'Furniture', label: 'Мебели' },
-    { value: 'Storage', label: 'Съхранение' },
-    { value: 'Renovation', label: 'Обновяване' },
-    { value: 'Outdoor', label: 'Двор и балкон' },
-    { value: 'Decoration', label: 'Декорация' },
+    { value: 'Organization', label: 'Организация', icon: 'organization' },
+    { value: 'Furniture', label: 'Мебели', icon: 'furniture' },
+    { value: 'Storage', label: 'Съхранение', icon: 'storage' },
+    { value: 'Renovation', label: 'Обновяване', icon: 'renovation' },
+    { value: 'Outdoor', label: 'Двор и балкон', icon: 'outdoor' },
+    { value: 'Decoration', label: 'Декорация', icon: 'decoration' },
 ];
 
 export const difficultyOptions = [

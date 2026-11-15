@@ -1,7 +1,10 @@
-export default function HeartIcon({ isFilled }) {
+export default function HeartIcon({
+    isFilled,
+    className = 'h-5 w-5',
+}) {
     return (
         <svg
-            className="h-5 w-5"
+            className={className}
             viewBox="0 0 24 24"
             fill={isFilled ? 'currentColor' : 'none'}
             stroke="currentColor"
