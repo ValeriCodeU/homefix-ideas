@@ -58,7 +58,7 @@ A short tour that covers the main requirements:
 
 - Public home page with the latest ideas and links to the six categories
 - Public catalog with search, category filter, sorting and pagination, all stored in the URL
-- Public details page with photo, cost, materials, description, likes and comments
+- Public details page with photo, publish date, cost, materials, description, likes and comments
 - Registration, login and logout. The session survives a page refresh
 - Create, edit and delete ideas. Only the author can edit or delete an idea
 - Photo upload to Cloud Storage with type and size validation and a preview
@@ -172,7 +172,7 @@ Every service builds its URLs from this variable, for example `${SERVER_URL}/dat
 #### Guest (Not Authenticated)
 
 - **Available pages / routes:** home page `/`, catalog `/ideas` (with search, filter, sorting and pages), idea details `/ideas/:ideaId`, login `/login`, register `/register`, and the 404 page for any unknown URL.
-- **Public data shown:** all ideas with photo, category, difficulty, estimated cost, materials and description, the number of likes, and all comments with the author's name and date.
+- **Public data shown:** all ideas with photo, category, difficulty, estimated cost, materials, description and publish date, the number of likes, and all comments with the author's name and date.
 - On the details page, guests see „Влезте, за да харесате“ (Log in to like) and „Влезте в профила си, за да коментирате“ (Log in to comment) instead of the buttons and the comment form.
 - Opening a private URL (for example `/ideas/create`) redirects to `/login`.
 
@@ -426,7 +426,7 @@ Two more examples:
   - **Icons:** a small set of inline SVG icons in [Icon.jsx](src/components/icon/Icon.jsx), without an icon library. Each category has its own icon.
   - **Feedback:** hover, focus-visible, active and disabled states on all controls.
   - **Responsive layout:** grids with 1, 2 or 3 columns. Below 1024 px the navigation collapses behind a menu button ([Header.jsx](src/components/layout/Header.jsx)).
-- **Small reusable UI parts:** [Logo](src/components/logo/Logo.jsx), [Icon](src/components/icon/Icon.jsx), [IdeaImage](src/components/idea-image/IdeaImage.jsx) (the photo or a placeholder), [CategoryBadge](src/components/category-badge/CategoryBadge.jsx) and [DifficultyBadge](src/components/difficulty-badge/DifficultyBadge.jsx). The idea card and the details page share them.
+- **Small reusable UI parts:** [Logo](src/components/logo/Logo.jsx), [Icon](src/components/icon/Icon.jsx), [IdeaImage](src/components/idea-image/IdeaImage.jsx) (the photo or a placeholder), [CategoryBadge](src/components/category-badge/CategoryBadge.jsx) and [DifficultyBadge](src/components/difficulty-badge/DifficultyBadge.jsx). The idea card and the details page share them. [EmptyState](src/components/empty-state/EmptyState.jsx) is the box for every empty list, and [SkeletonCard](src/components/skeleton-card/SkeletonCard.jsx) and [SkeletonDetails](src/components/skeleton-details/SkeletonDetails.jsx) are the gray placeholders shown while the lists and the details page load.
 
 ### 10. Typical User Flow
 
@@ -450,12 +450,12 @@ Two more examples:
   - A failed photo upload stops the save, so no idea is saved with a broken image.
   - Submit buttons are disabled while a request is pending.
 - **Empty or missing data states:**
-  - Empty catalog, „Моите идеи“ and „Любими“ pages show a message and a call-to-action button.
+  - Empty catalog, „Моите идеи“ and „Любими“ pages show an icon, a message and a call-to-action button ([EmptyState](src/components/empty-state/EmptyState.jsx)).
   - A search with no results offers „Изчисти филтрите“.
   - An unknown category in the URL shows „Такава категория не съществува.“ (This category does not exist).
   - An invalid page number falls back to a valid page.
   - An idea without a photo shows a placeholder, and empty optional fields are hidden.
-  - A missing idea shows a message, a discussion without comments invites the first comment, and unknown URLs show the 404 page.
+  - A missing idea shows a message, a discussion without comments invites the first comment, and unknown URLs show the 404 page with links to the ideas and to the home page.
 
 ---
 
@@ -508,8 +508,9 @@ homefix-ideas/
 │   │   ├── my-ideas/ favorite-ideas/ login/ register/ not-found/        # pages
 │   │   ├── idea-form/ idea-card/ idea-list/ idea-filters/ pagination/   # reusable
 │   │   ├── idea-likes/ idea-comment-create/ idea-comment-list/          # reusable
-│   │   ├── idea-image/ category-badge/ difficulty-badge/                # reusable
-│   │   └── field-error/ heart-icon/ skeleton-card/ icon/ logo/          # small UI parts
+│   │   ├── idea-image/ category-badge/ difficulty-badge/ empty-state/   # reusable
+│   │   ├── field-error/ heart-icon/ icon/ logo/                         # small UI parts
+│   │   └── skeleton-card/ skeleton-details/                             # loading placeholders
 │   ├── contexts/                 # AuthContext
 │   ├── hooks/                    # useLocalStorage, useIdeaFilters
 │   ├── services/                 # request.js + one service per collection, imageService
