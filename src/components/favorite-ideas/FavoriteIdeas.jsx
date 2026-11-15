@@ -121,6 +121,7 @@ export default function FavoriteIdeas() {
                 isLoading={isLoading}
                 error={error}
                 loadingText="Зареждане на любимите ви идеи…"
+                emptyIcon={hasFilters ? 'search' : 'heart'}
                 emptyMessage={hasFilters
                     ? 'Няма идеи по тези критерии.'
                     : 'Все още нямате любими идеи. Натиснете „Харесай“ на страницата на идея и тя ще се появи тук.'}

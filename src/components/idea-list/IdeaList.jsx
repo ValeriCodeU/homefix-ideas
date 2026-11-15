@@ -1,5 +1,4 @@
-import { Link } from 'react-router';
-
+import EmptyState from '../empty-state/EmptyState.jsx';
 import IdeaCard from '../idea-card/IdeaCard.jsx';
 import SkeletonCard from '../skeleton-card/SkeletonCard.jsx';
 
@@ -9,6 +8,7 @@ export default function IdeaList({
     error,
     loadingText = 'Зареждане на идеите…',
     skeletonCount = 3,
+    emptyIcon,
     emptyMessage,
     emptyLinkTo,
     emptyLinkLabel,
@@ -37,14 +37,12 @@ export default function IdeaList({
 
     if (ideas.length === 0) {
         return (
-            <div className="card p-8 text-center">
-                <p className="text-stone-600">{emptyMessage}</p>
-                {emptyLinkTo && (
-                    <Link to={emptyLinkTo} className="btn btn-lg btn-primary mt-4">
-                        {emptyLinkLabel}
-                    </Link>
-                )}
-            </div>
+            <EmptyState
+                icon={emptyIcon}
+                message={emptyMessage}
+                linkTo={emptyLinkTo}
+                linkLabel={emptyLinkLabel}
+            />
         );
     }
 

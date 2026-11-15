@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import * as ideaService from '../../services/ideaService.js';
 import * as likeService from '../../services/likeService.js';
 import useIdeaFilters from '../../hooks/useIdeaFilters.js';
+import EmptyState from '../empty-state/EmptyState.jsx';
 import IdeaFilters from '../idea-filters/IdeaFilters.jsx';
 import IdeaList from '../idea-list/IdeaList.jsx';
 import Pagination from '../pagination/Pagination.jsx';
@@ -85,15 +86,12 @@ export default function IdeasCatalog() {
         return (
             <section className="space-y-6">
                 <h1 className="page-title">Идеи</h1>
-                <div className="card p-8 text-center">
-                    <p className="text-stone-600">Такава категория не съществува.</p>
-                    <Link
-                        to="/ideas"
-                        className="btn btn-lg btn-primary mt-4"
-                    >
-                        Към всички идеи
-                    </Link>
-                </div>
+                <EmptyState
+                    icon="search"
+                    message="Такава категория не съществува."
+                    linkTo="/ideas"
+                    linkLabel="Към всички идеи"
+                />
             </section>
         );
     }
@@ -135,6 +133,7 @@ export default function IdeasCatalog() {
                 isLoading={isLoading}
                 error={error}
                 skeletonCount={IDEAS_PER_PAGE}
+                emptyIcon={search ? 'search' : 'idea'}
                 emptyMessage={getEmptyMessage(selectedCategory, search)}
                 emptyLinkTo={search ? '/ideas' : '/ideas/create'}
                 emptyLinkLabel={search ? 'Изчисти филтрите' : 'Сподели първата идея'}

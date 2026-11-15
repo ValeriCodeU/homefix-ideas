@@ -115,6 +115,7 @@ export default function MyIdeas() {
                 isLoading={isLoading}
                 error={error}
                 loadingText="Зареждане на идеите ви…"
+                emptyIcon={hasFilters ? 'search' : 'idea'}
                 emptyMessage={hasFilters ? 'Няма идеи по тези критерии.' : 'Все още нямате публикувани идеи.'}
                 emptyLinkTo={hasFilters ? '/my-ideas' : '/ideas/create'}
                 emptyLinkLabel={hasFilters ? 'Изчисти филтрите' : 'Добави първата си идея'}
