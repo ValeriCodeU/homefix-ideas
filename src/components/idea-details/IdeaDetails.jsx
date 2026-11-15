@@ -12,7 +12,9 @@ import IdeaCommentCreate from '../idea-comment-create/IdeaCommentCreate.jsx';
 import IdeaCommentList from '../idea-comment-list/IdeaCommentList.jsx';
 import IdeaImage from '../idea-image/IdeaImage.jsx';
 import IdeaLikes from '../idea-likes/IdeaLikes.jsx';
+import SkeletonDetails from '../skeleton-details/SkeletonDetails.jsx';
 import { isInvalidTokenError } from '../../utils/authErrors.js';
+import { formatLongDate } from '../../utils/formatDate.js';
 
 const hasValue = (value) =>
     value !== undefined && value !== null && value !== '';
@@ -183,7 +185,10 @@ export default function IdeaDetails() {
             </Link>
 
             {isLoading && (
-                <p className="text-stone-600">Зареждане на идеята…</p>
+                <div className="space-y-4">
+                    <p className="text-stone-600">Зареждане на идеята…</p>
+                    <SkeletonDetails />
+                </div>
             )}
 
             {!isLoading && error && (
@@ -214,7 +219,14 @@ export default function IdeaDetails() {
                                     </div>
                                 )}
 
-                                <h1 className="page-title">{idea.title}</h1>
+                                <div className="space-y-1">
+                                    <h1 className="page-title">{idea.title}</h1>
+                                    {hasValue(idea._createdOn) && (
+                                        <p className="text-sm text-stone-600">
+                                            Публикувана на {formatLongDate(idea._createdOn)}
+                                        </p>
+                                    )}
+                                </div>
 
                                 <dl className="flex flex-col gap-4">
                                     {hasValue(idea.estimatedCost) && (
