@@ -573,7 +573,7 @@ How the project meets the React Retake Exam specification:
   - it reads the body that Cloud Functions has already parsed (`req.body`);
   - it returns the HTTP server instead of calling `listen()`;
   - it can export and import its data for persistence (marked with `// Firebase:` comments).
-- **Resetting the data:** to start again from the seed data, delete `practice-server/data.json` in the Firebase console (Storage), then run `npm run deploy:server`. The new instance finds no file and starts from the seed data in `server.js`.
+- **Resetting the data:** to start again from the seed data, delete `practice-server/data.json` in the Firebase console (Storage), then run `firebase deploy --only functions:api`. Naming the function forces a new deploy even when its code did not change (`npm run deploy:server` skips an unchanged function). The new instance finds no file and starts from the seed data in `server.js`. This needs access to the Firebase project, so it is a step for the project owner, not for reviewers.
 
 ## Known limitations
 
