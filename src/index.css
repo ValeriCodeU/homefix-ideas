@@ -1,18 +1,131 @@
 @import "tailwindcss" source("../src");
 
+/*
+    Design tokens: цветовете и шрифтът на приложението се задават тук, на едно място.
+    Tailwind прави от тях класове, например bg-brand-600, text-accent-800 и bg-page.
+    Контрастът на текста върху тези цветове е проверен по WCAG AA (поне 4.5:1).
+*/
+@theme {
+    --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    /* Основен цвят (зелено): бутони, линкове, активни елементи */
+    --color-brand-50: #f2f8f4;
+    --color-brand-100: #deefe3;
+    --color-brand-200: #bcdfc8;
+    --color-brand-600: #2c744b;
+    --color-brand-700: #245d3e;
+    --color-brand-800: #1f4a33;
+    --color-brand-900: #183a29;
+
+    /* Акцент (кехлибар): най-важното действие на екрана */
+    --color-accent-100: #fef0c7;
+    --color-accent-300: #fccb4d;
+    --color-accent-400: #fbb724;
+    --color-accent-500: #f59a0b;
+    --color-accent-800: #8a4b0f;
+
+    /* Фон на страницата. Неутралните цветове са stone от палитрата на Tailwind */
+    --color-page: #f8f5ef;
+}
+
 @layer base {
+    /*
+        При lang="bg" шрифтът Manrope включва българската форма на кирилицата (т като m, д като g, и като u).
+        Тук тя е изключена, за да се четат буквите в познатата стандартна форма.
+        За българската форма изтрийте това правило.
+    */
+    html {
+        font-feature-settings: "locl" 0;
+    }
+
     button:not(:disabled) {
         cursor: pointer;
     }
+
+    /* Един и същ контур при фокус с клавиатурата за всички линкове, бутони и полета */
+    :focus-visible {
+        outline: 2px solid var(--color-brand-700);
+        outline-offset: 2px;
+    }
+
+    /* Върху тъмен фон (hero секцията и footer-ът) зеленият контур не се вижда */
+    .on-dark :focus-visible {
+        outline-color: var(--color-accent-300);
+    }
 }
 
-/* Общите стилове на полетата във формите: Login, Register, IdeaForm, IdeaCommentCreate, IdeaFilters */
 @layer components {
+    /* Заглавия */
+    .page-title {
+        @apply text-3xl font-extrabold tracking-tight text-stone-900;
+    }
+
+    .section-title {
+        @apply text-2xl font-bold tracking-tight text-stone-900;
+    }
+
+    /* Бутони: .btn задава формата, а втори клас задава цвета. Работят върху <button> и върху <Link> */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-center text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-lg {
+        @apply px-6 py-3 text-base;
+    }
+
+    .btn-primary {
+        @apply bg-brand-600 text-white not-disabled:hover:bg-brand-700 not-disabled:active:bg-brand-800;
+    }
+
+    .btn-accent {
+        @apply bg-accent-400 text-stone-900 not-disabled:hover:bg-accent-500;
+    }
+
+    .btn-secondary {
+        @apply border border-stone-300 bg-white text-stone-700 not-disabled:hover:bg-stone-100;
+    }
+
+    .btn-danger {
+        @apply border border-red-600 bg-white text-red-700 not-disabled:hover:bg-red-50;
+    }
+
+    /* Текстов линк */
+    .link {
+        @apply font-semibold text-brand-700 underline-offset-2 hover:underline;
+    }
+
+    /* Бяла кутия със заоблени ъгли: форми, карти на идеи, филтри, празни състояния */
+    .card {
+        @apply rounded-2xl border border-stone-200 bg-white shadow-sm;
+    }
+
+    /* Малък етикет: категория, трудност, брояч */
+    .badge {
+        @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+    }
+
+    /* Съобщение за грешка при неуспешно зареждане */
+    .alert-error {
+        @apply rounded-lg border border-red-200 bg-red-50 p-4 text-red-700;
+    }
+
+    /* Общите стилове на полетата във формите: Login, Register, IdeaForm, IdeaCommentCreate, IdeaFilters */
     .form-label {
-        @apply mb-1 block text-sm font-medium text-slate-700;
+        @apply mb-1 block text-sm font-semibold text-stone-700;
     }
 
     .form-field {
-        @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 transition-colors hover:border-slate-400 focus:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-invalid:border-red-500;
+        @apply w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-stone-900 placeholder:text-stone-500 transition-colors hover:border-stone-400 focus:border-brand-600 aria-invalid:border-red-500;
+    }
+
+    /* SweetAlert2: диалозите ползват цветовете и заоблянето на приложението */
+    .swal2-container {
+        --swal2-border-radius: 1rem;
+        --swal2-color: var(--color-stone-700);
+        --swal2-confirm-button-background-color: var(--color-brand-600);
+        --swal2-confirm-button-border-radius: 0.5rem;
+        --swal2-cancel-button-background-color: var(--color-stone-500);
+        --swal2-cancel-button-border-radius: 0.5rem;
+        --swal2-action-button-focus-box-shadow: 0 0 0 2px white, 0 0 0 4px var(--color-brand-700);
     }
 }
