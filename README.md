@@ -568,7 +568,7 @@ How the project meets the React Retake Exam specification:
 - [firebase-hosting-merge.yml](.github/workflows/firebase-hosting-merge.yml) runs `npm ci && npm run build` with Node.js 24 and deploys `dist/` to the live site.
 - [firebase-hosting-pull-request.yml](.github/workflows/firebase-hosting-pull-request.yml) deploys every pull request to a temporary preview URL.
 - Firebase Hosting rewrites every path to `index.html`, so deep links such as `/ideas/<id>` work after a refresh.
-- Cache header in [firebase.json](firebase.json): every file is served with `Cache-Control: no-cache`. The browser still keeps a copy, but it asks the server whether the copy is current before using it, and the server answers `304 Not Modified` when nothing changed. Without this, a browser could keep an old page for an hour after a deploy, ask for a bundle that no longer exists and show a blank page.
+- Cache headers in [firebase.json](firebase.json): pages are served with `Cache-Control: no-cache`, so the browser asks for the current page on every visit and a new deploy is visible at once. The files in `/assets/` keep the Hosting default of one hour (`max-age=3600`). Without the first rule, a browser could keep an old page for an hour after a deploy, ask for a bundle that no longer exists and show a blank page.
 - In [functions/index.js](functions/index.js), the function passes each request to the Practice Server. The server was adapted in three small ways:
   - it reads the body that Cloud Functions has already parsed (`req.body`);
   - it returns the HTTP server instead of calling `listen()`;
