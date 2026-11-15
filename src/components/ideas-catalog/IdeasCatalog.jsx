@@ -84,12 +84,12 @@ export default function IdeasCatalog() {
     if (isUnknownCategory) {
         return (
             <section className="space-y-6">
-                <h1 className="text-3xl font-bold text-slate-900">Идеи</h1>
-                <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
-                    <p className="text-slate-600">Такава категория не съществува.</p>
+                <h1 className="page-title">Идеи</h1>
+                <div className="card p-8 text-center">
+                    <p className="text-stone-600">Такава категория не съществува.</p>
                     <Link
                         to="/ideas"
-                        className="mt-4 inline-block rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="btn btn-lg btn-primary mt-4"
                     >
                         Към всички идеи
                     </Link>
@@ -102,13 +102,13 @@ export default function IdeasCatalog() {
         <section className="space-y-6">
             <div className="flex flex-wrap items-end justify-between gap-2">
                 <div className="min-w-0 space-y-1">
-                    <h1 className="text-3xl font-bold text-slate-900">Идеи</h1>
-                    <p className="break-words text-slate-600">
+                    <h1 className="page-title">Идеи</h1>
+                    <p className="break-words text-stone-600">
                         {getSubtitle(selectedCategory, search)}{' '}
                         {hasFilters && (
                             <Link
                                 to="/ideas"
-                                className="font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                className="link rounded"
                             >
                                 Изчисти филтрите
                             </Link>
@@ -117,7 +117,7 @@ export default function IdeasCatalog() {
                 </div>
 
                 {!isLoading && !error && matchingIdeas.length > 0 && (
-                    <span className="text-sm font-medium text-slate-500">
+                    <span className="text-sm font-semibold text-stone-600">
                         {matchingIdeas.length} {matchingIdeas.length === 1 ? 'идея' : 'идеи'}
                     </span>
                 )}

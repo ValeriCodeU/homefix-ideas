@@ -1,6 +1,6 @@
-const buttonClass = 'rounded-lg border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-60';
-const inactiveClass = 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:hover:bg-white';
-const activeClass = 'border-blue-600 bg-blue-600 text-white';
+const buttonClass = 'rounded-lg border px-3 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60';
+const inactiveClass = 'border-stone-300 bg-white text-stone-700 hover:bg-stone-100 disabled:hover:bg-white';
+const activeClass = 'border-brand-600 bg-brand-600 text-white';
 
 export default function Pagination({
     currentPage,

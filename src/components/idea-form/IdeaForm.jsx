@@ -8,8 +8,8 @@ import { uploadIdeaImage } from '../../services/imageService.js';
 import { categoryOptions, difficultyOptions } from '../../utils/ideaOptions.js';
 import { ideaRules } from '../../utils/validation.js';
 
-const fileButtonClass = 'group flex w-full cursor-pointer items-center gap-3 rounded-lg border border-slate-300 bg-white px-3 py-2 transition-colors hover:border-slate-400 peer-focus-visible:border-blue-500 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-blue-600 peer-aria-invalid:border-red-500';
-const previewClass = 'h-48 w-full max-w-sm rounded-lg border border-slate-200 object-cover';
+const fileButtonClass = 'group flex w-full cursor-pointer items-center gap-3 rounded-lg border border-stone-300 bg-white px-3 py-2 transition-colors hover:border-stone-400 peer-focus-visible:border-brand-600 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-700 peer-aria-invalid:border-red-500';
+const previewClass = 'h-48 w-full max-w-sm rounded-lg border border-stone-200 object-cover';
 
 const toFormValues = (values) => ({
     title: values?.title ?? '',
@@ -104,11 +104,11 @@ export default function IdeaForm({
     return (
         <div className="mx-auto max-w-2xl space-y-6">
             <div className="space-y-1">
-                <h1 className="text-3xl font-bold text-slate-900">{heading}</h1>
-                {helperText && <p className="text-slate-600">{helperText}</p>}
+                <h1 className="page-title">{heading}</h1>
+                {helperText && <p className="text-stone-600">{helperText}</p>}
             </div>
 
-            <form className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8" onSubmit={handleSubmit(formSubmitHandler)} noValidate>
+            <form className="card p-6 sm:p-8" onSubmit={handleSubmit(formSubmitHandler)} noValidate>
                 <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                         <label htmlFor="title" className="form-label">Заглавие</label>
@@ -182,27 +182,27 @@ export default function IdeaForm({
                             className="peer sr-only"
                         />
                         <label htmlFor="imageFile" className={fileButtonClass}>
-                            <span className="shrink-0 rounded-md bg-blue-50 px-3 py-0.5 text-sm font-semibold text-blue-700 transition-colors group-hover:bg-blue-100">
+                            <span className="shrink-0 rounded-md bg-brand-50 px-3 py-0.5 text-sm font-semibold text-brand-700 transition-colors group-hover:bg-brand-100">
                                 Изберете файл
                             </span>
-                            {fileName && <span className="min-w-0 truncate text-sm text-slate-900">{fileName}</span>}
-                            {!fileName && <span className="min-w-0 truncate text-sm text-slate-500">Няма избран файл</span>}
+                            {fileName && <span className="min-w-0 truncate text-sm text-stone-900">{fileName}</span>}
+                            {!fileName && <span className="min-w-0 truncate text-sm text-stone-500">Няма избран файл</span>}
                         </label>
-                        <p id="imageFile-hint" className="mt-1 text-xs text-slate-500">По желание. JPEG, PNG или WebP, до 5 MB.</p>
+                        <p id="imageFile-hint" className="mt-1 text-xs text-stone-500">По желание. JPEG, PNG или WebP, до 5 MB.</p>
                         <FieldError message={errors.imageFile?.message} />
                     </div>
 
                     {previewUrl && (
                         <figure className="sm:col-span-2">
                             <img src={previewUrl} alt="Преглед на избраната снимка" className={previewClass} />
-                            <figcaption className="mt-1 text-sm text-slate-600">Избрана снимка</figcaption>
+                            <figcaption className="mt-1 text-sm text-stone-600">Избрана снимка</figcaption>
                         </figure>
                     )}
 
                     {!previewUrl && currentImageUrl && (
                         <figure className="sm:col-span-2">
                             <img src={currentImageUrl} alt="Текущата снимка на идеята" className={previewClass} />
-                            <figcaption className="mt-1 text-sm text-slate-600">Текуща снимка. Изберете нов файл, ако искате да я смените.</figcaption>
+                            <figcaption className="mt-1 text-sm text-stone-600">Текуща снимка. Изберете нов файл, ако искате да я смените.</figcaption>
                         </figure>
                     )}
 
@@ -237,13 +237,13 @@ export default function IdeaForm({
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="btn btn-lg btn-primary"
                     >
                         {isSubmitting ? 'Запазване…' : submitLabel}
                     </button>
                     <Link
                         to={cancelTo}
-                        className="rounded-lg border border-slate-300 px-6 py-3 text-center text-base font-semibold text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="btn btn-lg btn-secondary"
                     >
                         Отказ
                     </Link>

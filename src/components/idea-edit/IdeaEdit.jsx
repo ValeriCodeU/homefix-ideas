@@ -73,12 +73,12 @@ export default function IdeaEdit() {
     };
 
     if (isLoading) {
-        return <p className="text-slate-600">Зареждане на идеята…</p>;
+        return <p className="text-stone-600">Зареждане на идеята…</p>;
     }
 
     if (error) {
         return (
-            <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+            <p className="alert-error">
                 {error}
             </p>
         );

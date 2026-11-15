@@ -5,10 +5,13 @@ import Swal from 'sweetalert2';
 import * as ideaService from '../../services/ideaService.js';
 import * as commentService from '../../services/commentService.js';
 import AuthContext from '../../contexts/AuthContext.jsx';
+import CategoryBadge from '../category-badge/CategoryBadge.jsx';
+import DifficultyBadge from '../difficulty-badge/DifficultyBadge.jsx';
+import Icon from '../icon/Icon.jsx';
 import IdeaCommentCreate from '../idea-comment-create/IdeaCommentCreate.jsx';
 import IdeaCommentList from '../idea-comment-list/IdeaCommentList.jsx';
+import IdeaImage from '../idea-image/IdeaImage.jsx';
 import IdeaLikes from '../idea-likes/IdeaLikes.jsx';
-import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js';
 import { isInvalidTokenError } from '../../utils/authErrors.js';
 
 const hasValue = (value) =>
@@ -173,68 +176,53 @@ export default function IdeaDetails() {
         <div className="space-y-6">
             <Link
                 to={backTo}
-                className="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="link inline-flex items-center gap-1 rounded text-sm"
             >
-                &larr; Назад
+                <Icon name="arrowLeft" className="h-4 w-4" />
+                Назад
             </Link>
 
             {isLoading && (
-                <p className="text-slate-600">Зареждане на идеята…</p>
+                <p className="text-stone-600">Зареждане на идеята…</p>
             )}
 
             {!isLoading && error && (
-                <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+                <p className="alert-error">
                     {error}
                 </p>
             )}
 
             {!isLoading && !error && idea && (
                 <>
-                    <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <article className="card overflow-hidden">
                         <div className="grid gap-0 lg:grid-cols-2">
-                            {idea.imageUrl
-                                ? (
-                                    <img
-                                        src={idea.imageUrl}
-                                        alt={`Изображение към идея: ${idea.title}`}
-                                        className="h-64 w-full object-cover lg:h-full"
-                                    />
-                                )
-                                : (
-                                    <div
-                                        className="flex h-64 w-full items-center justify-center bg-gradient-to-br from-blue-100 to-slate-200 lg:h-full"
-                                        aria-hidden="true"
-                                    >
-                                        <span className="text-2xl font-semibold text-blue-700">HomeFix Ideas</span>
-                                    </div>
-                                )
-                            }
+                            <IdeaImage
+                                imageUrl={idea.imageUrl}
+                                title={idea.title}
+                                className="h-64 w-full sm:h-80 lg:h-full"
+                            />
 
                             <div className="flex flex-col gap-4 p-6 sm:p-8">
                                 {(hasValue(idea.category) || hasValue(idea.difficulty)) && (
                                     <div className="flex flex-wrap gap-2">
                                         {hasValue(idea.category) && (
-                                            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
-                                                {getOptionLabel(categoryOptions, idea.category)}
-                                            </span>
+                                            <CategoryBadge category={idea.category} />
                                         )}
                                         {hasValue(idea.difficulty) && (
-                                            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
-                                                {getOptionLabel(difficultyOptions, idea.difficulty)}
-                                            </span>
+                                            <DifficultyBadge difficulty={idea.difficulty} />
                                         )}
                                     </div>
                                 )}
 
-                                <h1 className="text-3xl font-bold text-slate-900">{idea.title}</h1>
+                                <h1 className="page-title">{idea.title}</h1>
 
-                                <dl className="flex flex-col gap-3">
+                                <dl className="flex flex-col gap-4">
                                     {hasValue(idea.estimatedCost) && (
                                         <div>
-                                            <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                                            <dt className="text-xs font-semibold uppercase tracking-wide text-stone-500">
                                                 Ориентировъчна цена
                                             </dt>
-                                            <dd className="text-lg font-semibold text-slate-900">
+                                            <dd className="text-2xl font-extrabold text-stone-900">
                                                 {idea.estimatedCost} €
                                             </dd>
                                         </div>
@@ -242,41 +230,41 @@ export default function IdeaDetails() {
 
                                     {hasValue(idea.materials) && (
                                         <div>
-                                            <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                                            <dt className="text-xs font-semibold uppercase tracking-wide text-stone-500">
                                                 Материали
                                             </dt>
-                                            <dd className="text-slate-700">{idea.materials}</dd>
+                                            <dd className="text-stone-700">{idea.materials}</dd>
                                         </div>
                                     )}
                                 </dl>
 
-                                <div className="mt-auto border-t border-slate-200 pt-4">
+                                <div className="mt-auto border-t border-stone-200 pt-4">
                                     <IdeaLikes ideaId={ideaId} ideaOwnerId={idea._ownerId} />
                                 </div>
                             </div>
                         </div>
 
                         {hasValue(idea.description) && (
-                            <div className="border-t border-slate-200 p-6 sm:p-8">
-                                <h2 className="mb-2 text-lg font-semibold text-slate-900">Описание</h2>
-                                <p className="whitespace-pre-line leading-relaxed text-slate-700">
+                            <div className="border-t border-stone-200 p-6 sm:p-8">
+                                <h2 className="mb-2 text-lg font-bold text-stone-900">Описание</h2>
+                                <p className="whitespace-pre-line leading-relaxed text-stone-700">
                                     {idea.description}
                                 </p>
                             </div>
                         )}
 
                         {isOwner && (
-                            <div className="flex flex-col gap-3 border-t border-slate-200 p-6 sm:flex-row sm:p-8">
+                            <div className="flex flex-col gap-3 border-t border-stone-200 p-6 sm:flex-row sm:p-8">
                                 <Link
                                     to={`/ideas/${ideaId}/edit`}
-                                    className="rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                    className="btn btn-primary"
                                 >
                                     Редактирай
                                 </Link>
                                 <button
                                     type="button"
                                     onClick={deleteIdeaHandler}
-                                    className="rounded-lg border border-red-600 px-5 py-2.5 text-sm font-semibold text-red-700 transition-colors hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                                    className="btn btn-danger"
                                 >
                                     Изтрий
                                 </button>
@@ -286,23 +274,23 @@ export default function IdeaDetails() {
 
                     <section
                         aria-labelledby="comments-heading"
-                        className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                        className="card space-y-6 p-6 sm:p-8"
                     >
                         <div className="flex items-center gap-2">
-                            <h2 id="comments-heading" className="text-lg font-semibold text-slate-900">Коментари</h2>
+                            <h2 id="comments-heading" className="text-lg font-bold text-stone-900">Коментари</h2>
                             {canShowComments && (
-                                <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
+                                <span className="badge bg-stone-100 text-stone-700">
                                     {optimisticComments.length}
                                 </span>
                             )}
                         </div>
 
                         {isCommentsLoading && (
-                            <p className="text-slate-600">Зареждане на коментарите…</p>
+                            <p className="text-stone-600">Зареждане на коментарите…</p>
                         )}
 
                         {!isCommentsLoading && commentsError && (
-                            <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+                            <p className="alert-error">
                                 {commentsError}
                             </p>
                         )}
@@ -312,10 +300,10 @@ export default function IdeaDetails() {
                         )}
 
                         {canShowComments && !isAuthenticated && (
-                            <p className="rounded-lg bg-slate-50 p-4 text-sm text-slate-600">
+                            <p className="rounded-lg bg-brand-50 p-4 text-sm text-stone-700">
                                 <Link
                                     to="/login"
-                                    className="font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                    className="link rounded"
                                 >
                                     Влезте в профила си
                                 </Link>

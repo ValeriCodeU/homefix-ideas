@@ -70,13 +70,13 @@ export default function MyIdeas() {
     return (
         <section className="space-y-6">
             <div className="space-y-1">
-                <h1 className="text-3xl font-bold text-slate-900">Моите идеи</h1>
-                <p className="text-slate-600">
+                <h1 className="page-title">Моите идеи</h1>
+                <p className="text-stone-600">
                     Идеите, които сте споделили с общността.{' '}
                     {hasFilters && (
                         <Link
                             to="/my-ideas"
-                            className="font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                            className="link rounded"
                         >
                             Изчисти филтрите
                         </Link>
@@ -84,19 +84,19 @@ export default function MyIdeas() {
                 </p>
             </div>
 
-            <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="card flex items-center gap-4 p-6">
                 <span
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xl font-semibold text-blue-700"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xl font-bold text-brand-700"
                     aria-hidden="true"
                 >
                     {displayName.charAt(0).toUpperCase()}
                 </span>
 
                 <div className="min-w-0">
-                    <p className="truncate text-lg font-semibold text-slate-900">{displayName}</p>
-                    <p className="break-all text-sm text-slate-600">{user.email}</p>
+                    <p className="truncate text-lg font-semibold text-stone-900">{displayName}</p>
+                    <p className="break-all text-sm text-stone-600">{user.email}</p>
                     {!isLoading && !error && (
-                        <p className="mt-1 text-sm font-medium text-slate-700">{getIdeasLabel(ideas.length)}</p>
+                        <p className="mt-1 text-sm font-medium text-stone-700">{getIdeasLabel(ideas.length)}</p>
                     )}
                 </div>
             </div>

@@ -42,13 +42,13 @@ export default function Login() {
     return (
         <div className="mx-auto max-w-md space-y-6">
             <div className="space-y-1 text-center">
-                <h1 className="text-3xl font-bold text-slate-900">Вход</h1>
-                <p className="text-slate-600">
+                <h1 className="page-title">Вход</h1>
+                <p className="text-stone-600">
                     Влезте в профила си, за да споделяте и управлявате своите идеи.
                 </p>
             </div>
 
-            <form className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8" onSubmit={handleSubmit(loginSubmitHandler)} noValidate>
+            <form className="card space-y-4 p-6 sm:p-8" onSubmit={handleSubmit(loginSubmitHandler)} noValidate>
                 <div>
                     <label htmlFor="email" className="form-label">Имейл</label>
                     <input
@@ -80,17 +80,17 @@ export default function Login() {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="btn btn-lg btn-primary w-full"
                 >
                     {isSubmitting ? 'Влизане…' : 'Вход'}
                 </button>
             </form>
 
-            <p className="text-center text-sm text-slate-600">
+            <p className="text-center text-sm text-stone-600">
                 Нямате профил?{' '}
                 <Link
                     to="/register"
-                    className="font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    className="link rounded"
                 >
                     Регистрирайте се
                 </Link>

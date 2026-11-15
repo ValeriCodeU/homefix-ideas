@@ -107,7 +107,7 @@ export default function IdeaLikes({
     };
 
     if (isLoading) {
-        return <p className="text-sm text-slate-500">Зареждане на харесванията…</p>;
+        return <p className="text-sm text-stone-500">Зареждане на харесванията…</p>;
     }
 
     if (error) {
@@ -124,11 +124,10 @@ export default function IdeaLikes({
                     aria-pressed={hasLiked}
                     className={[
                         'inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition-colors',
-                        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600',
                         'disabled:cursor-not-allowed disabled:opacity-60',
                         hasLiked
                             ? 'border-red-200 bg-red-50 text-red-700 hover:bg-red-100'
-                            : 'border-slate-300 text-slate-700 hover:bg-slate-100',
+                            : 'border-stone-300 text-stone-700 hover:bg-stone-100',
                     ].join(' ')}
                 >
                     <HeartIcon isFilled={hasLiked} />
@@ -142,13 +141,13 @@ export default function IdeaLikes({
                 </span>
             )}
 
-            <span className="text-sm font-medium text-slate-700">{getLikesLabel(likesCount)}</span>
+            <span className="text-sm font-medium text-stone-700">{getLikesLabel(likesCount)}</span>
 
             {!isAuthenticated && (
-                <span className="text-sm text-slate-600">
+                <span className="text-sm text-stone-600">
                     <Link
                         to="/login"
-                        className="font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="link rounded"
                     >
                         Влезте
                     </Link>

@@ -85,13 +85,13 @@ export default function FavoriteIdeas() {
         <section className="space-y-6">
             <div className="flex flex-wrap items-end justify-between gap-2">
                 <div className="space-y-1">
-                    <h1 className="text-3xl font-bold text-slate-900">Любими идеи</h1>
-                    <p className="text-slate-600">
+                    <h1 className="page-title">Любими идеи</h1>
+                    <p className="text-stone-600">
                         Идеите, които сте харесали.{' '}
                         {hasFilters && (
                             <Link
                                 to="/favorites"
-                                className="font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                className="link rounded"
                             >
                                 Изчисти филтрите
                             </Link>
@@ -100,7 +100,7 @@ export default function FavoriteIdeas() {
                 </div>
 
                 {!isLoading && !error && matchingIdeas.length > 0 && (
-                    <span className="text-sm font-medium text-slate-500">
+                    <span className="text-sm font-semibold text-stone-600">
                         {getFavoritesLabel(matchingIdeas.length)}
                     </span>
                 )}
