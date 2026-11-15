@@ -22,12 +22,12 @@ Open https://homefix-ideas-app.web.app. Nothing needs to be installed.
 
 You can also register a new account. All data is saved permanently (see [Data persistence](#data-persistence)). Because of that, please delete only ideas that you created yourself, so the demo data stays the same for other reviewers.
 
-**About the demo content:** the seed ideas, comments, likes and the two demo accounts are sample data written for this project. The photos of the seed ideas were generated with AI to illustrate the examples. Photos that users add through the app are uploaded by them.
+**About the demo content:** the seed ideas, comments, likes and the two demo accounts are sample data written for this project. The photos of the seed ideas were generated with AI to illustrate the examples. Photos that users add through the app are uploaded by them. The photo in the home page banner is one of the seed photos, stored as a static asset of the frontend.
 
 A short tour that covers the main requirements:
 
 1. **As a guest**, open „Идеи“ (Ideas). Try the search (for example `рафт`), the category filter and the sorting by „Най-харесвани“ (Most liked), move to page 2 and open an idea. Then open `/ideas/create` directly: you are redirected to the login page.
-2. **Log in as `peter@abv.bg`**. The header now shows „Добави идея“ (Add idea), „Моите идеи“ (My ideas), „Любими“ (Favorites) and a user menu. Opening `/login` now redirects to the home page.
+2. **Log in as `peter@abv.bg`**. The header now shows „Моите идеи“ (My ideas), „Любими“ (Favorites), the „Добави идея“ (Add idea) button and a user menu. On a phone or tablet, the links open from the menu button in the header. Opening `/login` now redirects to the home page.
 3. Open „Органайзер за кабели под бюрото“, an idea of peter. Peter sees „Редактирай“ (Edit) and „Изтрий“ (Delete) and no like button, because authors cannot like their own ideas.
 4. Open „Обновяване на стари кухненски шкафове“, an idea of john. The button shows „Харесано“ (Liked). Click it to remove the like, click it again, and add a comment.
 5. Use „Добави идея“ to create an idea with a photo. Then edit it, and finally delete it after the confirmation dialog.
@@ -67,7 +67,8 @@ A short tour that covers the main requirements:
 - „Любими“ (Favorites): the ideas the user has liked, most recently liked first
 - Route guards for private and guest-only pages, and a 404 page
 - Form validation with messages in Bulgarian, and loading, error and empty states on every page
-- Responsive layout for mobile, tablet and desktop
+- Responsive layout for mobile, tablet and desktop, with a collapsible menu on small screens
+- One visual system for all pages: a green and amber palette, one font, shared button, card and form styles, and inline SVG icons
 
 ## Tech stack
 
@@ -78,7 +79,7 @@ A short tour that covers the main requirements:
 | Routing | React Router 8 (`BrowserRouter`) |
 | Global state | React Context API (`AuthContext`) |
 | Forms | react-hook-form 7 |
-| Styling | Tailwind CSS 4 through an external stylesheet ([src/index.css](src/index.css)) |
+| Styling | Tailwind CSS 4 with design tokens and shared component classes in an external stylesheet ([src/index.css](src/index.css)); Manrope font from Google Fonts |
 | Dialogs | SweetAlert2 (error messages and delete confirmation) |
 | Backend | SoftUni Practice Server (Node.js REST API) as a Cloud Function for Firebase, 2nd gen |
 | File storage | Cloud Storage for Firebase (idea photos and the saved server data) |
@@ -243,7 +244,7 @@ Routes are defined in [App.jsx](src/App.jsx). Two pathless layout routes split t
 
 #### Catalog / List Page
 
-- **What data is displayed:** every idea is a card ([IdeaCard](src/components/idea-card/IdeaCard.jsx)) with the photo, or a placeholder when there is none. The card also shows the category and difficulty badges, the number of likes, the title, a short description, the estimated cost and a „Детайли“ (Details) button. The catalog shows 6 ideas per page and the total number of matching ideas.
+- **What data is displayed:** every idea is a card ([IdeaCard](src/components/idea-card/IdeaCard.jsx)) with the photo, or a placeholder when there is none. The card also shows the category (with its icon) and the number of likes over the photo, then the title, a short description, a color-coded difficulty badge, the estimated cost and a „Детайли“ (Details) link. The catalog shows 6 ideas per page and the total number of matching ideas.
 - **How the user interacts with the list:**
   - **Search** in the title and the materials, started with Enter or „Търси“ (Search).
   - **Filter** by one of six categories. The category cards on the home page open the catalog already filtered.
@@ -255,7 +256,7 @@ Routes are defined in [App.jsx](src/App.jsx). Two pathless layout routes split t
 #### Details Page
 
 - **How navigation is triggered:**
-  - The „Детайли“ button is a `<Link to={`/ideas/${_id}`}>`. It also passes the current list URL in the link state, so „← Назад“ (Back) returns to the same filtered page.
+  - The „Детайли“ link is a `<Link to={`/ideas/${_id}`}>`. CSS stretches it over the whole card, so a click on the photo or the title opens the idea too. It also passes the current list URL in the link state, so „Назад“ (Back) returns to the same filtered page.
   - `useNavigate()` is used after actions: after create or edit it opens the idea, and after delete it opens the catalog.
 - **What data is received via route parameters:** `ideaId`. The page loads `GET /data/ideas/:ideaId`, the likes of the idea (`where=ideaId="..."`) and its comments with their authors (`load=author=_ownerId:users`). An unknown id shows „Идеята не съществува или не може да бъде заредена.“ (The idea does not exist or cannot be loaded).
 
@@ -355,7 +356,7 @@ All rules are in [src/utils/validation.js](src/utils/validation.js). Messages ar
 How the forms work:
 
 - **Library:** react-hook-form manages them.
-- **Binding:** `register()` connects each input to the form state through React synthetic `onChange` and `onBlur` handlers. The filter selects in `IdeaFilters` are fully controlled inputs, with `value` taken from the URL and an `onChange` handler. Other synthetic events in use: `onSubmit`, `onClick` (like, delete, pagination, user menu) and a custom `onChange` for the photo input.
+- **Binding:** `register()` connects each input to the form state through React synthetic `onChange` and `onBlur` handlers. The filter selects in `IdeaFilters` are fully controlled inputs, with `value` taken from the URL and an `onChange` handler. Other synthetic events in use: `onSubmit`, `onClick` (like, delete, pagination, user menu, mobile navigation menu) and a custom `onChange` for the photo input.
 - **When fields are validated:** the login, register and idea forms use `mode: 'onTouched'`, which shows a field's error after the user leaves it. The comment form validates on submit, so an empty box that the user only clicks does not show an error. `noValidate` turns off the browser's English messages. Invalid fields get `aria-invalid` and a red border.
 - **Duplicate submits:** the submit button is disabled while the request is pending.
 
@@ -365,7 +366,7 @@ How the forms work:
 
 | Hook | Where |
 |---|---|
-| `useState` | page data, loading and error flags, menu state, photo preview |
+| `useState` | page data, loading and error flags, the user menu and the mobile navigation menu, photo preview |
 | `useEffect` | data loading on every page, document listeners in `UserMenu`, photo preview cleanup in `IdeaForm` |
 | `useContext` | `AuthContext` in 11 components |
 | `useRef` | `UserMenu` (closes the menu on a click outside) |
@@ -415,12 +416,17 @@ Two more examples:
 
 #### Component Styling
 
-- **Approach:** components are styled with **Tailwind CSS 4** utility classes, compiled from the external stylesheet [src/index.css](src/index.css).
-- **The stylesheet:** it also holds base styles and the shared form classes (`.form-label`, `.form-field`) that every form uses.
-- **Visual rules:**
-  - a limited palette: blue for primary actions, slate for text and backgrounds, red for errors and likes;
-  - hover, focus-visible, active and disabled states on all controls;
-  - responsive grids with 1, 2 or 3 columns.
+- **Approach:** components are styled with **Tailwind CSS 4**, compiled from the external stylesheet [src/index.css](src/index.css). The stylesheet is the single place for the look of the application:
+  - **Design tokens** in `@theme`: the `brand` (green) and `accent` (amber) colors, the page background and the font. Tailwind turns them into classes such as `bg-brand-600`, so changing a color means changing one line.
+  - **Shared component classes** in `@layer components`: `.btn` with `.btn-primary`, `.btn-accent`, `.btn-secondary` and `.btn-danger`, plus `.link`, `.card`, `.badge`, `.alert-error`, `.page-title`, `.section-title`, `.form-label` and `.form-field`. Buttons, cards and fields look the same on every page, and their styles are not repeated in the components.
+  - **Base styles:** one `:focus-visible` outline for every link, button and field. SweetAlert2 dialogs get the same colors through the library's CSS variables.
+- **Visual rules** (they follow the SoftUni "Design Best Practices" list):
+  - **Palette:** green for primary actions and links, and amber only for the main call to action („Добави идея“, „Разгледай идеите“). Warm neutral grays are used for text and backgrounds, and red for errors, delete and likes. The text colors were checked for a contrast of at least 4.5:1 (WCAG AA).
+  - **Typography:** one font, Manrope, with Cyrillic support. It is loaded from Google Fonts, and the system font is the fallback.
+  - **Icons:** a small set of inline SVG icons in [Icon.jsx](src/components/icon/Icon.jsx), without an icon library. Each category has its own icon.
+  - **Feedback:** hover, focus-visible, active and disabled states on all controls.
+  - **Responsive layout:** grids with 1, 2 or 3 columns. Below 1024 px the navigation collapses behind a menu button ([Header.jsx](src/components/layout/Header.jsx)).
+- **Small reusable UI parts:** [Logo](src/components/logo/Logo.jsx), [Icon](src/components/icon/Icon.jsx), [IdeaImage](src/components/idea-image/IdeaImage.jsx) (the photo or a placeholder), [CategoryBadge](src/components/category-badge/CategoryBadge.jsx) and [DifficultyBadge](src/components/difficulty-badge/DifficultyBadge.jsx). The idea card and the details page share them.
 
 ### 10. Typical User Flow
 
@@ -492,8 +498,9 @@ homefix-ideas/
 ├── src/                          # React application
 │   ├── main.jsx                  # entry point, BrowserRouter
 │   ├── App.jsx                   # AuthProvider and all routes
-│   ├── index.css                 # Tailwind CSS, base styles, shared form classes
+│   ├── index.css                 # Tailwind CSS: design tokens, base styles, shared component classes
 │   ├── firebase.js               # Firebase app and Storage (emulator in development)
+│   ├── assets/                   # static images bundled by Vite (home page banner photo)
 │   ├── components/               # one kebab-case folder per component
 │   │   ├── layout/               # Layout, Header, UserMenu, Footer
 │   │   ├── guards/               # PrivateRoute, GuestRoute
@@ -501,11 +508,13 @@ homefix-ideas/
 │   │   ├── my-ideas/ favorite-ideas/ login/ register/ not-found/        # pages
 │   │   ├── idea-form/ idea-card/ idea-list/ idea-filters/ pagination/   # reusable
 │   │   ├── idea-likes/ idea-comment-create/ idea-comment-list/          # reusable
-│   │   └── field-error/ heart-icon/ skeleton-card/                      # small UI parts
+│   │   ├── idea-image/ category-badge/ difficulty-badge/                # reusable
+│   │   └── field-error/ heart-icon/ skeleton-card/ icon/ logo/          # small UI parts
 │   ├── contexts/                 # AuthContext
 │   ├── hooks/                    # useLocalStorage, useIdeaFilters
 │   ├── services/                 # request.js + one service per collection, imageService
 │   └── utils/                    # validation rules, idea options, list helpers, formatting
+├── public/favicon.svg            # browser tab icon, the same mark as the logo
 ├── functions/                    # backend: Cloud Function (separate Node.js project)
 │   ├── index.js                  # HTTP function "api" and data persistence
 │   └── server/server.js          # SoftUni Practice Server, adapted for Cloud Functions
@@ -522,6 +531,7 @@ homefix-ideas/
 - **Likes and comments are separate collections.** Liking an idea creates a record of the current user and never changes the idea of another user.
 - **List state lives in the URL** (`useSearchParams`). It survives a refresh, the Back button and sharing a link, and it needs no extra React state.
 - **Every request with a token handles an expired session the same way** with `isInvalidTokenError()` and `sessionExpiredHandler()`.
+- **One place for the look:** colors, the font and the shared button, card and form classes are defined once in `src/index.css`. Components use the names (`btn btn-primary`, `bg-brand-600`) and do not repeat the styles.
 
 ## Requirements coverage
 
@@ -541,7 +551,7 @@ How the project meets the React Retake Exam specification:
 | User interaction | likes, comments, favorites |
 | Hooks and lifecycle | see [Functional Guide, section 9](#9-react-specific-techniques) |
 | Context API | `AuthContext` used by 11 components |
-| Folder structure and external CSS | component folders in [src/components](src/components); styling in [src/index.css](src/index.css) |
+| Folder structure and external CSS | component folders in [src/components](src/components); design tokens and shared component classes in the external stylesheet [src/index.css](src/index.css) |
 | Documentation | this README |
 | Deployed frontend and backend | Firebase Hosting and the Cloud Function `api`; data persists in Cloud Storage |
 | Git history | public repository, more than 75 commits on more than 25 different days (July to November 2026) |
