@@ -1,7 +1,10 @@
 import { Link, useLocation } from 'react-router';
 
+import CategoryBadge from '../category-badge/CategoryBadge.jsx';
+import DifficultyBadge from '../difficulty-badge/DifficultyBadge.jsx';
 import HeartIcon from '../heart-icon/HeartIcon.jsx';
-import { categoryOptions, difficultyOptions, getOptionLabel } from '../../utils/ideaOptions.js';
+import Icon from '../icon/Icon.jsx';
+import IdeaImage from '../idea-image/IdeaImage.jsx';
 
 export default function IdeaCard({
     _id,
@@ -14,72 +17,62 @@ export default function IdeaCard({
     likesCount
 }) {
 
-    // useLocation hook 
-    // Подаваме адреса на текущия списък с филтрите му, за да може линкът в детайлите да върне към него   
+    // useLocation hook
+    // Подаваме адреса на текущия списък с филтрите му, за да може линкът в детайлите да върне към него
     const { pathname, search } = useLocation();
 
+    const hasCost = estimatedCost !== undefined && estimatedCost !== null && estimatedCost !== '';
+
     return (
-        <article className="flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-            {imageUrl
-                ? (
-                    <img
-                        src={imageUrl}
-                        alt={`Изображение към идея: ${title}`}
-                        className="h-44 w-full object-cover"
+        <article className="card group relative flex flex-col overflow-hidden transition-shadow hover:shadow-lg">
+            <div className="relative aspect-4/3 overflow-hidden">
+                <IdeaImage
+                    imageUrl={imageUrl}
+                    title={title}
+                    className="h-full w-full transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none"
+                />
+
+                {category && (
+                    <CategoryBadge
+                        category={category}
+                        className="absolute left-3 top-3 bg-white/95 py-1 text-stone-800 shadow-sm"
                     />
-                )
-                : (
-                    <div
-                        className="flex h-44 w-full items-center justify-center bg-gradient-to-br from-blue-100 to-slate-200"
-                        aria-hidden="true"
-                    >
-                        <span className="text-lg font-semibold text-blue-700">HomeFix Ideas</span>
-                    </div>
-                )
-            }
-
-            <div className="flex flex-1 flex-col gap-3 p-4">
-                <div className="flex flex-wrap items-center gap-2">
-                    {category && (
-                        <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
-                            {getOptionLabel(categoryOptions, category)}
-                        </span>
-                    )}
-                    {difficulty && (
-                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
-                            {getOptionLabel(difficultyOptions, difficulty)}
-                        </span>
-                    )}
-                    <span className="ml-auto inline-flex items-center gap-1 text-sm font-medium text-slate-700">
-                        <span className="text-red-600">
-                            <HeartIcon isFilled={likesCount > 0} />
-                        </span>
-                        <span className="sr-only">Харесвания:</span>
-                        {likesCount}
-                    </span>
-                </div>
-
-                <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-
-                {description && (
-                    <p className="line-clamp-3 text-sm text-slate-600">{description}</p>
                 )}
 
-                <div className="mt-auto flex items-center justify-between pt-2">
-                    {estimatedCost !== undefined &&
-                        estimatedCost !== null &&
-                        estimatedCost !== '' && (
-                            <span className="text-sm font-medium text-slate-700">
-                                Ориентировъчно: {estimatedCost} €
-                            </span>
-                        )}
+                <span className="badge absolute right-3 top-3 bg-white/95 py-1 text-stone-800 shadow-sm">
+                    <span className="text-red-600">
+                        <HeartIcon isFilled={likesCount > 0} className="h-4 w-4" />
+                    </span>
+                    <span className="sr-only">Харесвания:</span>
+                    {likesCount}
+                </span>
+            </div>
 
+            <div className="flex flex-1 flex-col gap-2 p-4">
+                <h3 className="text-lg font-bold leading-snug text-stone-900">{title}</h3>
+
+                {description && (
+                    <p className="line-clamp-2 text-sm text-stone-600">{description}</p>
+                )}
+
+                <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-3">
+                    {difficulty && <DifficultyBadge difficulty={difficulty} />}
+
+                    {hasCost && (
+                        <span className="text-sm font-bold text-stone-900">
+                            <span className="sr-only">Ориентировъчна цена:</span>
+                            около {estimatedCost} €
+                        </span>
+                    )}
+
+                    {/* after:inset-0 разпъва линка върху цялата карта, така че и снимката, и заглавието водят към детайлите */}
                     <Link
                         to={`/ideas/${_id}`}
                         state={{ backTo: `${pathname}${search}` }}
-                        className="rounded bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="link ml-auto inline-flex items-center gap-1 rounded text-sm after:absolute after:inset-0"
                     >
                         Детайли
+                        <Icon name="arrowRight" className="h-4 w-4" />
                     </Link>
                 </div>
             </div>
