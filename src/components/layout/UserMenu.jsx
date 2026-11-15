@@ -54,20 +54,22 @@ export default function UserMenu({
                 onClick={toggleMenuHandler}
                 aria-expanded={isOpen}
                 aria-controls="user-menu"
-                className="flex items-center gap-2 rounded px-2 py-1 text-sm text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                aria-label={`Профил: ${displayName}`}
+                className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-100"
             >
                 <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-700"
                     aria-hidden="true"
                 >
                     {displayName.charAt(0).toUpperCase()}
                 </span>
                 <span className="hidden lg:inline">Добре дошли,</span>
-                <span className="max-w-24 truncate font-semibold text-slate-900 lg:max-w-48">
+                {/* На тесен екран остава само аватарът. Имейлът се вижда в падащото меню */}
+                <span className="hidden max-w-24 truncate font-semibold text-stone-900 sm:block lg:max-w-48">
                     {displayName}
                 </span>
                 <svg
-                    className={`h-4 w-4 shrink-0 text-slate-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                    className={`h-4 w-4 shrink-0 text-stone-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -83,16 +85,16 @@ export default function UserMenu({
             {isOpen && (
                 <div
                     id="user-menu"
-                    className="absolute right-0 top-full z-10 mt-2 w-56 rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
+                    className="absolute right-0 top-full z-10 mt-2 w-56 rounded-xl border border-stone-200 bg-white py-1 shadow-lg"
                 >
-                    <p className="border-b border-slate-200 px-4 py-2 text-sm text-slate-600">
+                    <p className="border-b border-stone-200 px-4 py-2 text-sm text-stone-600">
                         Влезли сте като
-                        <span className="block break-all font-semibold text-slate-900">{email}</span>
+                        <span className="block break-all font-semibold text-stone-900">{email}</span>
                     </p>
                     <button
                         type="button"
                         onClick={logoutClickHandler}
-                        className="block w-full px-4 py-2 text-left text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"
+                        className="block w-full px-4 py-2 text-left text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:-outline-offset-2"
                     >
                         Изход
                     </button>
