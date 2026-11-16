@@ -136,6 +136,70 @@ export default function IdeaDetails() {
         }
     };
 
+    const updateCommentHandler = async (commentId, text) => {
+        try {
+            const updatedComment = await commentService.update(commentId, ideaId, text, accessToken);
+
+            // Отговорът на PUT няма author (той идва само при GET с load), затова го взимаме от стария запис
+            setComments((state) => state.map((comment) => {
+                if (comment._id === commentId) {
+                    return { ...updatedComment, author: comment.author };
+                }
+
+                return comment;
+            }));
+
+            return true;
+        } catch (err) {
+            if (isInvalidTokenError(err)) {
+                sessionExpiredHandler();
+                return false;
+            }
+
+            console.error('Update comment error:', err);
+
+            Swal.fire({
+                title: '❌ Грешка!',
+                text: 'Коментарът не може да бъде променен. Опитайте отново.',
+            });
+
+            return false;
+        }
+    };
+
+    const deleteCommentHandler = async (commentId) => {
+        const confirmed = await Swal.fire({
+            title: 'Сигурни ли сте?',
+            text: 'Коментарът ще бъде изтрит завинаги.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Да, изтрий',
+            cancelButtonText: 'Отказ'
+        });
+
+        if (!confirmed.isConfirmed) {
+            return;
+        }
+
+        try {
+            await commentService.remove(commentId, accessToken);
+
+            setComments((state) => state.filter((comment) => comment._id !== commentId));
+        } catch (err) {
+            if (isInvalidTokenError(err)) {
+                sessionExpiredHandler();
+                return;
+            }
+
+            console.error('Delete comment error:', err);
+
+            Swal.fire({
+                title: '❌ Грешка!',
+                text: 'Коментарът не може да бъде изтрит. Опитайте отново.',
+            });
+        }
+    };
+
     const canShowComments = !isCommentsLoading && !commentsError;
 
     const deleteIdeaHandler = async () => {
@@ -324,7 +388,13 @@ export default function IdeaDetails() {
                         )}
 
                         {canShowComments && (
-                            <IdeaCommentList comments={optimisticComments} ideaOwnerId={idea._ownerId} />
+                            <IdeaCommentList
+                                comments={optimisticComments}
+                                ideaOwnerId={idea._ownerId}
+                                currentUserId={user?._id}
+                                onUpdate={updateCommentHandler}
+                                onDelete={deleteCommentHandler}
+                            />
                         )}
                     </section>
                 </>

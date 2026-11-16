@@ -13,3 +13,11 @@ export const getByIdeaId = (ideaId) => {
 
 export const create = (ideaId, text, accessToken) =>
     request(baseUrl, 'POST', { ideaId, text }, accessToken);
+
+// PUT подменя целия запис на сървъра, затова заедно с новия текст се изпраща и ideaId.
+// Без него коментарът губи връзката си с идеята
+export const update = (commentId, ideaId, text, accessToken) =>
+    request(`${baseUrl}/${commentId}`, 'PUT', { ideaId, text }, accessToken);
+
+export const remove = (commentId, accessToken) =>
+    request(`${baseUrl}/${commentId}`, 'DELETE', undefined, accessToken);

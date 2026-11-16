@@ -20,7 +20,7 @@ Open https://homefix-ideas-app.web.app. Nothing needs to be installed.
 | `peter@abv.bg` | `123456` | 4 ideas, has liked 1 idea of john |
 | `john@abv.bg` | `123456` | 3 ideas, has liked 2 ideas of peter |
 
-You can also register a new account. All data is saved permanently (see [Data persistence](#data-persistence)). Because of that, please delete only ideas that you created yourself, so the demo data stays the same for other reviewers.
+You can also register a new account. All data is saved permanently (see [Data persistence](#data-persistence)). Because of that, please edit and delete only ideas and comments that you created yourself, so the demo data stays the same for other reviewers.
 
 **About the demo content:** the seed ideas, comments, likes and the two demo accounts are sample data written for this project. The photos of the seed ideas were generated with AI to illustrate the examples. Photos that users add through the app are uploaded by them. The photo in the home page banner is one of the seed photos, stored as a static asset of the frontend.
 
@@ -29,7 +29,7 @@ A short tour that covers the main requirements:
 1. **As a guest**, open „Идеи“ (Ideas). Try the search (for example `рафт`), the category filter and the sorting by „Най-харесвани“ (Most liked), move to page 2 and open an idea. Then open `/ideas/create` directly: you are redirected to the login page.
 2. **Log in as `peter@abv.bg`**. The header now shows „Моите идеи“ (My ideas), „Любими“ (Favorites), the „Добави идея“ (Add idea) button and a user menu. On a phone or tablet, the links open from the menu button in the header. Opening `/login` now redirects to the home page.
 3. Open „Органайзер за кабели под бюрото“, an idea of peter. Peter sees „Редактирай“ (Edit) and „Изтрий“ (Delete) and no like button, because authors cannot like their own ideas.
-4. Open „Обновяване на стари кухненски шкафове“, an idea of john. The button shows „Харесано“ (Liked). Click it to remove the like, click it again, and add a comment.
+4. Open „Обновяване на стари кухненски шкафове“, an idea of john. The button shows „Харесано“ (Liked). Click it to remove the like, click it again, and add a comment. Under your own comment you see „Редактирай“ (Edit) and „Изтрий“ (Delete): change the text, then delete the comment.
 5. Use „Добави идея“ to create an idea with a photo. Then edit it, and finally delete it after the confirmation dialog.
 6. Open „Моите идеи“ and „Любими“, then log out from the user menu („Изход“).
 
@@ -40,7 +40,7 @@ A short tour that covers the main requirements:
 | Home page | Catalog with search, filter, sorting and pages |
 |---|---|
 | ![Home page](docs/screenshots/home.jpg) | ![Ideas catalog](docs/screenshots/catalog.jpg) |
-| **Idea details with likes and comments** | **Mobile view (filtered catalog)** |
+| **Idea details with likes and comments (the user's own comments have Edit and Delete)** | **Mobile view (filtered catalog)** |
 | ![Idea details](docs/screenshots/details.jpg) | <img src="docs/screenshots/mobile.jpg" alt="Mobile view of the filtered catalog" width="300"> |
 
 ## Contents
@@ -63,6 +63,7 @@ A short tour that covers the main requirements:
 - Create, edit and delete ideas. Only the author can edit or delete an idea
 - Photo upload to Cloud Storage with type and size validation and a preview
 - Likes (like and unlike) and comments for logged-in users
+- Edit and delete comments. Only the author of a comment can change or delete it
 - „Моите идеи“ (My ideas): profile card and the user's own ideas
 - „Любими“ (Favorites): the ideas the user has liked, most recently liked first
 - Route guards for private and guest-only pages, and a 404 page
@@ -172,18 +173,19 @@ Every service builds its URLs from this variable, for example `${SERVER_URL}/dat
 #### Guest (Not Authenticated)
 
 - **Available pages / routes:** home page `/`, catalog `/ideas` (with search, filter, sorting and pages), idea details `/ideas/:ideaId`, login `/login`, register `/register`, and the 404 page for any unknown URL.
-- **Public data shown:** all ideas with photo, category, difficulty, estimated cost, materials, description and publish date, the number of likes, and all comments with the author's name and date.
+- **Public data shown:** all ideas with photo, category, difficulty, estimated cost, materials, description and publish date, the number of likes, and all comments with the author's name and date. An edited comment has the note „(редактиран)“ (edited).
 - On the details page, guests see „Влезте, за да харесате“ (Log in to like) and „Влезте в профила си, за да коментирате“ (Log in to comment) instead of the buttons and the comment form.
 - Opening a private URL (for example `/ideas/create`) redirects to `/login`.
 
 #### Authenticated User
 
 - **Main sections / pages:** „Начало“ (Home), „Идеи“ (Ideas), „Добави идея“ (Add idea, `/ideas/create`), „Моите идеи“ (My ideas, `/my-ideas`), „Любими“ (Favorites, `/favorites`), and a user menu with the e-mail and „Изход“ (Log out).
-- **Details pages:** the same details page, plus the „Харесай“ / „Харесано“ (Like / Liked) button on other users' ideas and the comment form.
+- **Details pages:** the same details page, plus the „Харесай“ / „Харесано“ (Like / Liked) button on other users' ideas, the comment form, and „Редактирай“ / „Изтрий“ (Edit / Delete) under the user's own comments.
 - **Create / Edit / Delete actions:**
   - Every logged-in user can create ideas.
   - Only the author sees „Редактирай“ (Edit) and „Изтрий“ (Delete). The edit page also checks the owner: another user who opens `/ideas/:ideaId/edit` is redirected to the details page. The server enforces the same rule and answers `403` to anyone else.
   - Users can like other users' ideas, remove their like, and comment on any idea. Authors can comment on their own ideas, and their comments get the badge „Автор“ (Author).
+  - Only the author of a comment sees „Редактирай“ and „Изтрий“ under it. The server enforces the same rule and answers `403` to anyone else.
 - Logged-in users cannot open `/login` or `/register`. They are redirected to the home page.
 
 ### 3. Authentication & Session Handling
@@ -274,7 +276,7 @@ Real backend: the **SoftUni Practice Server** (Node.js REST API), deployed as a 
 |---|---|---|
 | `ideas` | `title, category, difficulty, estimatedCost, materials, description, imageUrl` | the main CRUD collection |
 | `likes` | `ideaId` | likes, like counts, favorites |
-| `comments` | `ideaId, text` | comments on the details page |
+| `comments` | `ideaId, text` | comments on the details page, also with all four operations |
 
 System fields (`_id`, `_ownerId`, `_createdOn`, `_updatedOn`) are set by the server. `category` and `difficulty` store English values (`Organization`, `Easy`), and the UI shows Bulgarian labels from [ideaOptions.js](src/utils/ideaOptions.js).
 
@@ -290,7 +292,7 @@ The Practice Server keeps its data in memory, and Cloud Run stops the instance w
 
 ### 7. Data Operations (CRUD)
 
-The `ideas` collection supports all four operations. All requests go through the service modules in [src/services](src/services) and the shared [request.js](src/services/request.js). `request.js` adds the JSON and `X-Authorization` headers and turns error responses into exceptions.
+The `ideas` collection supports all four operations, and they are described first. The `comments` collection supports them too (see [Comments](#comments-create-read-update-delete) below). All requests go through the service modules in [src/services](src/services) and the shared [request.js](src/services/request.js). `request.js` adds the JSON and `X-Authorization` headers and turns error responses into exceptions.
 
 #### Create (POST)
 
@@ -324,10 +326,24 @@ Data is loaded in `useEffect`, and every page has loading, error and empty state
 - **How the author deletes:** the author clicks „Изтрий“ on the details page. A SweetAlert2 dialog asks for confirmation („Сигурни ли сте?“ / „Да, изтрий“ / „Отказ“: Are you sure? / Yes, delete / Cancel). After confirmation, `DELETE /data/ideas/:ideaId` is sent.
 - **How the UI updates:** a success dialog is shown, and the user is taken to the catalog. The catalog loads the list again, without the deleted idea.
 
+#### Comments (create, read, update, delete)
+
+Comments are the second collection with all four operations. Everything happens on the details page, in [IdeaDetails](src/components/idea-details/IdeaDetails.jsx), [IdeaCommentList](src/components/idea-comment-list/IdeaCommentList.jsx) and [commentService.js](src/services/commentService.js).
+
+- **Create:** `POST /data/comments { ideaId, text }`. The new comment appears at the top immediately (`useOptimistic`) with the text „Изпраща се…“ (Sending…). The server response then replaces it.
+- **Read:** `GET /data/comments` with `where=ideaId="..."`, the authors (`load=author=_ownerId:users`) and the newest first.
+- **Update:** the author clicks „Редактирай“ under the comment. The text turns into a small form ([IdeaCommentEdit](src/components/idea-comment-edit/IdeaCommentEdit.jsx)) with „Запази“ (Save) and „Отказ“ (Cancel) and the same validation rules as a new comment.
+  - `PUT /data/comments/:id { ideaId, text }` saves the change. The server replaces the whole record on `PUT`, so `ideaId` is sent together with the new text.
+  - If the text was not changed, the form closes and no request is sent.
+  - **How the UI updates:** the comment in the list is replaced with the server response and gets the note „(редактиран)“ (edited), which is shown when the record has `_updatedOn`. Its place in the list does not change.
+- **Delete:** the author clicks „Изтрий“ and confirms in a SweetAlert2 dialog. Then `DELETE /data/comments/:id` is sent.
+  - **How the UI updates:** the comment is removed from the list and the counter next to „Коментари“ goes down, without loading the page again.
+- Edit and delete wait for the server response before the list changes. Only adding a comment is optimistic.
+
 #### Interaction with records
 
 - **Likes:** `POST /data/likes { ideaId }` and `DELETE /data/likes/:id`. The button toggles and the count updates after the server confirms.
-- **Comments:** `POST /data/comments { ideaId, text }`. The new comment appears at the top immediately (`useOptimistic`) with the text „Изпраща се…“ (Sending…). The server response then replaces it.
+- **Comments:** see the section above.
 - Likes and comments are separate records that reference the idea by `ideaId`. Users never modify another user's idea.
 
 ### 8. Forms & Validation
@@ -338,6 +354,7 @@ Data is loaded in `useEffect`, and every page has loading, error and empty state
 - Register ([Register.jsx](src/components/register/Register.jsx))
 - Create idea and Edit idea, one shared component ([IdeaForm.jsx](src/components/idea-form/IdeaForm.jsx))
 - Comment form ([IdeaCommentCreate.jsx](src/components/idea-comment-create/IdeaCommentCreate.jsx))
+- Edit comment form, shown in place of the comment text ([IdeaCommentEdit.jsx](src/components/idea-comment-edit/IdeaCommentEdit.jsx))
 - Search form and filter selects in the lists ([IdeaFilters.jsx](src/components/idea-filters/IdeaFilters.jsx))
 
 #### Validation Rules
@@ -351,13 +368,13 @@ All rules are in [src/utils/validation.js](src/utils/validation.js). Messages ar
 - **Category** and **Difficulty:** required selections.
 - **Photo:** optional. It must be JPEG, PNG or WebP and smaller than 5 MB. It is checked as soon as a file is chosen, and a valid file shows a preview.
 - **Materials:** required, 3–500 characters. **Description:** optional, 3–1000 characters.
-- **Comment:** required, not only spaces, at most 500 characters.
+- **Comment** (new and edited): required, not only spaces, at most 500 characters.
 
 How the forms work:
 
 - **Library:** react-hook-form manages them.
 - **Binding:** `register()` connects each input to the form state through React synthetic `onChange` and `onBlur` handlers. The filter selects in `IdeaFilters` are fully controlled inputs, with `value` taken from the URL and an `onChange` handler. Other synthetic events in use: `onSubmit`, `onClick` (like, delete, pagination, user menu, mobile navigation menu) and a custom `onChange` for the photo input.
-- **When fields are validated:** the login, register and idea forms use `mode: 'onTouched'`, which shows a field's error after the user leaves it. The comment form validates on submit, so an empty box that the user only clicks does not show an error. `noValidate` turns off the browser's English messages. Invalid fields get `aria-invalid` and a red border.
+- **When fields are validated:** the login, register and idea forms use `mode: 'onTouched'`, which shows a field's error after the user leaves it. The two comment forms validate on submit, so an empty box that the user only clicks does not show an error. `noValidate` turns off the browser's English messages. Invalid fields get `aria-invalid` and a red border.
 - **Duplicate submits:** the submit button is disabled while the request is pending.
 
 ### 9. React-Specific Techniques
@@ -366,7 +383,7 @@ How the forms work:
 
 | Hook | Where |
 |---|---|
-| `useState` | page data, loading and error flags, the user menu and the mobile navigation menu, photo preview |
+| `useState` | page data, loading and error flags, the user menu and the mobile navigation menu, photo preview, the comment that is being edited |
 | `useEffect` | data loading on every page, document listeners in `UserMenu`, photo preview cleanup in `IdeaForm` |
 | `useContext` | `AuthContext` in 11 components |
 | `useRef` | `UserMenu` (closes the menu on a click outside) |
@@ -434,7 +451,7 @@ Two more examples:
 2. The visitor opens an idea and reads the description, the likes and the comments. To like it, they click „Регистрация“ (Register) and create an account.
 3. After registration they are logged in and back on the home page. They click „Добави идея“, fill in the form, choose a photo and save. The details page of the new idea opens.
 4. They notice a typo, click „Редактирай“, fix it and save. The details page shows the change.
-5. They open another user's idea, click „Харесай“ (Like) and write a comment. The idea now appears in „Любими“.
+5. They open another user's idea, click „Харесай“ (Like) and write a comment. They spot a mistake in it, click „Редактирай“ under the comment and fix it. The idea now appears in „Любими“.
 6. In „Моите идеи“ they see their idea. Later they delete it after the confirmation dialog, and log out from the user menu.
 
 ### 11. Error & Edge Case Handling
@@ -508,6 +525,7 @@ homefix-ideas/
 │   │   ├── my-ideas/ favorite-ideas/ login/ register/ not-found/        # pages
 │   │   ├── idea-form/ idea-card/ idea-list/ idea-filters/ pagination/   # reusable
 │   │   ├── idea-likes/ idea-comment-create/ idea-comment-list/          # reusable
+│   │   ├── idea-comment-edit/                                           # reusable
 │   │   ├── idea-image/ category-badge/ difficulty-badge/ empty-state/   # reusable
 │   │   ├── field-error/ heart-icon/ icon/ logo/                         # small UI parts
 │   │   └── skeleton-card/ skeleton-details/                             # loading placeholders
@@ -546,7 +564,7 @@ How the project meets the React Retake Exam specification:
 | Route guards | [PrivateRoute](src/components/guards/PrivateRoute.jsx), [GuestRoute](src/components/guards/GuestRoute.jsx), plus the owner check in [IdeaEdit](src/components/idea-edit/IdeaEdit.jsx) |
 | Register, Login, Logout; identity shared across the app | [AuthContext](src/contexts/AuthContext.jsx) with `localStorage` persistence |
 | Remote data, no hardcoded data | REST requests in [src/services](src/services) to the deployed Practice Server |
-| Full CRUD on a non-user collection, only the author edits or deletes | `ideas`: create, read, update, delete; owner checks in the UI, on the edit route and on the server |
+| Full CRUD on a non-user collection, only the author edits or deletes | `ideas`: create, read, update, delete; owner checks in the UI, on the edit route and on the server. `comments` has all four operations too, and only the author of a comment edits or deletes it |
 | Controlled forms and synthetic events | react-hook-form (`register` with `onChange` and `onBlur`), controlled selects in [IdeaFilters](src/components/idea-filters/IdeaFilters.jsx), `onSubmit` and `onClick` handlers |
 | Validation and error handling | [validation.js](src/utils/validation.js), field messages, error dialogs, loading, error and empty states |
 | User interaction | likes, comments, favorites |
